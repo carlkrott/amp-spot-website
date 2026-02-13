@@ -11,6 +11,7 @@ export default function PluginList({ initialCategory }: PluginListProps) {
   const [plugins, setPlugins] = useState<PluginData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState<Record<number, boolean>>({});
   const [category, setCategory] = useState(initialCategory || '');
 
   const categories = [
@@ -47,9 +48,51 @@ export default function PluginList({ initialCategory }: PluginListProps) {
     fetchPlugins();
   }, [fetchPlugins]);
 
-  function handleDownload(plugin: PluginData) {
-    // TODO: Implement download logic
-    console.log('Download:', plugin.name);
+  async function handleDownload(plugin: PluginData) {
+    try {
+      // Set loading state for this plugin
+      setDownloading(prev => ({ ...prev, [plugin.id]: true }));
+
+      // Log download event to API
+      const response = await fetch(`/api/plugins/${plugin.id}/download`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: 'anonymous', // TODO: Get from auth when implemented
+          platform: detectPlatform(),
+          version: '1.0.0', // TODO: Use actual version
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to initiate download');
+      }
+
+      const data = await response.json();
+
+      // Trigger browser download by opening the download URL
+      window.open(data.plugin.download_url, '_blank');
+
+      // Optional: Show success message (TODO: Replace with toast notification)
+      // For now, we'll just set a timeout to clear the downloading state
+      setTimeout(() => {
+        setDownloading(prev => ({ ...prev, [plugin.id]: false }));
+      }, 2000);
+
+    } catch (err) {
+      console.error('Download error:', err);
+      setDownloading(prev => ({ ...prev, [plugin.id]: false }));
+      alert('Download failed. Please try again.');
+    }
+  }
+
+  // Helper function to detect user's platform
+  function detectPlatform(): string {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes('Mac OS X')) return 'macOS';
+    if (userAgent.includes('Windows')) return 'Windows';
+    if (userAgent.includes('Linux')) return 'Linux';
+    return 'unknown';
   }
 
   return (
@@ -98,6 +141,7 @@ export default function PluginList({ initialCategory }: PluginListProps) {
             key={plugin.id}
             plugin={plugin}
             onDownload={handleDownload}
+            downloading={downloading[plugin.id] || false}
           />
         ))}
       </div>
