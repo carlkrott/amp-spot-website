@@ -2,6 +2,184 @@ import type { BlogPost, BlogPostPreview } from '@/types/blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'how-to-fix-muddy-mixes-eq-tutorial',
+    title: 'How to Fix Muddy Mixes with EQ (Video Tutorial)',
+    excerpt: 'Watch our step-by-step video guide on eliminating mud from your mixes using surgical EQ techniques. Learn exactly where to cut and how much.',
+    content: `
+# How to Fix Muddy Mixes with EQ
+
+Muddy mixes are one of the most common problems in music production. In this video tutorial, we show you exactly how to identify and remove mud using EQ.
+
+## Watch the Full Tutorial
+
+<div class="aspect-video w-full bg-slate-800 rounded-xl flex items-center justify-center">
+  <a href="https://youtube.com/@ampspot" target="_blank" class="text-orange-500">Watch on YouTube</a>
+</div>
+
+## Key Takeaways
+
+### 1. Identify the Problem Frequencies
+- **200-400Hz** is where most mud lives
+- Use a sweeping technique to find the exact frequency
+- Boost first to find, then cut to fix
+
+### 2. Use Subtractive EQ
+- Start with gentle cuts (2-4dB)
+- Use moderate Q values (1-3) for natural sound
+- Don't overdo it—subtle changes add up
+
+### 3. Check in Context
+- Always EQ while listening to the full mix
+- Solo can be misleading
+- Toggle your EQ on/off to verify improvement
+
+### 4. Address Multiple Instruments
+- Mud often comes from frequency buildup
+- EQ several instruments slightly instead of one drastically
+- Create separation between similar instruments
+
+## Tools Used in This Video
+
+We used the [Amp Spot EQ Plugin](/plugins/eq) for all demonstrations in this video. It's free to try for 14 days.
+
+## What's Next?
+
+Want more mixing tutorials? Subscribe to our [YouTube channel](https://youtube.com/@ampspot) and check out our [blog](/blog) for written guides.
+
+---
+
+*Video published February 10, 2024 • Runtime: 12:34*
+`,
+    author: 'Amp Spot Team',
+    publishedAt: '2024-02-10',
+    tags: ['Video', 'Tutorial', 'Mixing', 'EQ'],
+    readTime: 4,
+  },
+  {
+    slug: 'compression-for-beginners-masterclass',
+    title: 'Compression Masterclass for Beginners (Full Video)',
+    excerpt: 'Everything you need to know about compression in one comprehensive video tutorial. From basic concepts to advanced techniques.',
+    content: `
+# Compression Masterclass for Beginners
+
+Compression can be intimidating for beginners, but it doesn't have to be. This video breaks down everything you need to know in simple, easy-to-understand terms.
+
+## Watch the Full Masterclass
+
+<div class="aspect-video w-full bg-slate-800 rounded-xl flex items-center justify-center">
+  <a href="https://youtube.com/@ampspot" target="_blank" class="text-orange-500">Watch on YouTube</a>
+</div>
+
+## Topics Covered
+
+### Part 1: Understanding Compression (0:00-8:45)
+- What compression does to audio
+- Why we use it in mixing and mastering
+- Common misconceptions
+
+### Part 2: The Four Main Controls (8:46-18:20)
+- **Threshold**: When compression starts
+- **Ratio**: How much compression applies
+- **Attack**: How fast compression engages
+- **Release**: How fast compression lets go
+
+### Part 3: Practical Applications (18:21-32:15)
+- Compressing vocals for consistency
+- Drums: punch vs. sustain
+- Bass: glue and control
+- Master bus compression
+
+### Part 4: Common Mistakes (32:16-42:00)
+- Over-compressing (and how to avoid it)
+- Wrong attack/release times
+- Not using your ears
+- Forgetting makeup gain
+
+## Download the Session Files
+
+Patreon supporters get access to the full session files used in this tutorial. [Join here](https://patreon.com/ampspot).
+
+## Plugin Used
+
+We used the [Amp Spot Compressor](/plugins/compressor) exclusively for this masterclass. Try it free for 14 days.
+
+---
+
+*Video published February 8, 2024 • Runtime: 42:18*
+`,
+    author: 'Amp Spot Team',
+    publishedAt: '2024-02-08',
+    tags: ['Video', 'Tutorial', 'Compression', 'Mixing'],
+    readTime: 6,
+  },
+  {
+    slug: 'amp-spot-eq-plugin-walkthrough',
+    title: 'Amp Spot EQ Plugin - Complete Feature Walkthrough',
+    excerpt: 'Discover every feature of our flagship EQ plugin in this detailed walkthrough video. Learn tips, tricks, and hidden features.',
+    content: `
+# Amp Spot EQ Plugin - Complete Walkthrough
+
+Get to know every feature, button, and workflow tip for the Amp Spot EQ plugin in this comprehensive video guide.
+
+## Watch the Walkthrough
+
+<div class="aspect-video w-full bg-slate-800 rounded-xl flex items-center justify-center">
+  <a href="https://youtube.com/@ampspot" target="_blank" class="text-orange-500">Watch on YouTube</a>
+</div>
+
+## Features Covered
+
+### The Interface (0:00-5:30)
+- Main display and spectrum analyzer
+- Band controls and frequency selection
+- Preset management
+
+### EQ Bands Explained (5:31-15:45)
+- High-pass and low-pass filters
+- Parametric bands (gain, frequency, Q)
+- Shelving bands
+- Mid/Side processing mode
+
+### Advanced Features (15:46-25:20)
+- Spectrum analyzer overlays
+- A/B comparison mode
+- Undo/redo functionality
+- Preset browser and favorites
+
+### Workflow Tips (25:21-32:50)
+- Keyboard shortcuts
+- Quick band copying
+- Saving custom presets
+- Integration with your DAW
+
+### Sound Quality & Performance (32:51-38:00)
+- Zero-latency design
+- CPU usage optimization
+- Oversampling options
+- Analog modeling (coming in v2.0)
+
+## Hidden Features
+
+Did you know you can:
+- **Double-click** a band to solo it
+- **Option/Alt + drag** to adjust Q while moving frequency
+- **Shift + click** to reset a parameter to default
+- **Right-click** anywhere to access quick menu
+
+## Download & Try
+
+The EQ plugin is available now with a free 14-day trial. [Download here](/download).
+
+---
+
+*Video published February 5, 2024 • Runtime: 38:42*
+`,
+    author: 'Amp Spot Team',
+    publishedAt: '2024-02-05',
+    tags: ['Video', 'Product', 'EQ', 'Tutorial'],
+    readTime: 5,
+  },
+  {
     slug: 'introducing-amp-spot',
     title: 'Introducing Amp Spot: Pro Audio Tools for Everyone',
     excerpt: 'Professional audio plugins shouldn\'t cost a fortune. We\'re changing that with our suite of powerful, accessible tools for music producers of all levels.',

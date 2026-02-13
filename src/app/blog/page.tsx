@@ -1,35 +1,15 @@
 import Link from 'next/link';
+import { getAllPosts, getAllTags } from '@/lib/blog';
 
 export const metadata = {
   title: 'Blog | Amp Spot',
   description: 'Tips, tutorials, and insights for music producers and audio engineers.',
 };
 
-const blogPosts = [
-  {
-    id: 1,
-    title: '10 EQ Mistakes You\'re Probably Making',
-    excerpt: 'Common EQ pitfalls and how to avoid them for cleaner, more professional mixes.',
-    date: 'Coming Soon',
-    category: 'Mixing Tips',
-  },
-  {
-    id: 2,
-    title: 'The Psychology of Compression',
-    excerpt: 'Understanding how compression affects the listener\'s perception of your music.',
-    date: 'Coming Soon',
-    category: 'Technique',
-  },
-  {
-    id: 3,
-    title: 'Home Studio Setup on a Budget',
-    excerpt: 'Get great sounding recordings without breaking the bank.',
-    date: 'Coming Soon',
-    category: 'Production',
-  },
-];
-
 export default function BlogPage() {
+  const posts = getAllPosts();
+  const tags = getAllTags();
+
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Hero Section */}
@@ -62,25 +42,52 @@ export default function BlogPage() {
         </div>
       </section>
 
+      {/* Tags Filter */}
+      <section className="py-8 bg-slate-950/50">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="flex flex-wrap gap-3 justify-center">
+            <span className="text-sm font-semibold text-gray-400">Filter by topic:</span>
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                className="rounded-full bg-slate-800 border border-slate-700 px-4 py-1.5 text-sm font-medium text-gray-300 hover:bg-slate-700 hover:border-orange-500/50 transition-all"
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Blog Posts */}
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.map((post) => (
-              <article
-                key={post.id}
-                className="relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700/50 p-6 backdrop-blur-sm"
+            {posts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700/50 p-6 backdrop-blur-sm hover:bg-slate-800 hover:border-orange-500/50 transition-all"
               >
-                <span className="inline-block mb-3 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-medium text-orange-400">
-                  {post.category}
-                </span>
-                <h2 className="text-xl font-bold text-white mb-2">{post.title}</h2>
-                <p className="text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{post.date}</span>
-                  <span className="text-sm font-medium text-gray-400">Coming Soon</span>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block rounded-full bg-orange-500/20 px-3 py-1 text-xs font-medium text-orange-400"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </article>
+                <h2 className="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
+                  {post.title}
+                </h2>
+                <p className="text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                  <span>{post.readTime} min read</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
