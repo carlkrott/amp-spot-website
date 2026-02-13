@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { AnimatedMeterBridge } from './AnimatedMeterBridge';
+import Image from 'next/image';
+import { CurrencySelector } from './CurrencySelector';
 
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Plugins', href: '/plugins' },
-  { name: 'YouTube', href: '/youtube' },
+  { name: 'Social Media', href: '/social' },
   { name: 'Blog', href: '/blog' },
   { name: 'Pricing', href: '/pricing' },
 ];
@@ -16,19 +17,18 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <header className="fixed inset-x-0 top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 flex flex-col items-center gap-1">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
-              </div>
-              <span className="text-xl font-bold text-white">Amp Spot</span>
-            </div>
-            <div className="hidden sm:block scale-75 origin-top">
-              <AnimatedMeterBridge />
-            </div>
+          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <Image 
+              src="/logo.svg" 
+              alt="Amp Spot Logo" 
+              width={32} 
+              height={32}
+              className="h-8 w-8"
+            />
+            <span className="text-xl font-bold text-white">Amp Spot</span>
           </Link>
         </div>
         
@@ -57,7 +57,8 @@ export function Header() {
           ))}
         </div>
         
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 lg:items-center">
+          <CurrencySelector />
           <Link
             href="/login"
             className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors"
@@ -80,9 +81,13 @@ export function Header() {
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-slate-800">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">A</span>
-                </div>
+                <Image 
+                  src="/logo.svg" 
+                  alt="Amp Spot Logo" 
+                  width={32} 
+                  height={32}
+                  className="h-8 w-8"
+                />
                 <span className="text-xl font-bold text-white">Amp Spot</span>
               </Link>
               <button

@@ -1,33 +1,74 @@
+'use client';
+
 import Link from 'next/link';
+import { AnimatedMeterBridge } from './AnimatedMeterBridge';
 
 const footerLinks = {
   products: [
-    { name: 'EQ', href: '/plugins/eq' },
-    { name: 'Compressor', href: '/plugins/compressor' },
-    { name: 'Analyzer', href: '/plugins/analyzer' },
-    { name: 'M/S Processor', href: '/plugins/ms-processor' },
+    { name: 'All Plugins', href: '/plugins' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Download', href: '/download' },
   ],
-  support: [
-    { name: 'Documentation', href: '/docs' },
-    { name: 'Tutorials', href: '/tutorials' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Contact', href: '/contact' },
+  resources: [
+    { name: 'Blog', href: '/blog' },
+    { name: 'Social Media', href: '/social' },
+    { name: 'Roadmap', href: '/roadmap' },
   ],
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' },
+    { name: 'Contact', href: '/contact' },
   ],
   legal: [
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
-    { name: 'Licenses', href: '/licenses' },
   ],
 };
 
 export function Footer() {
   return (
     <footer className="bg-slate-950 border-t border-slate-800">
+      {/* CTA Section with Full-Width Animation */}
+      <div className="relative w-full overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 py-20">
+        {/* Full-width animated background */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-20 overflow-hidden">
+          <div className="scale-150 transform">
+            <AnimatedMeterBridge />
+          </div>
+        </div>
+        
+        {/* Floating Card */}
+        <div className="relative z-10 mx-auto max-w-4xl px-6">
+          <div className="rounded-3xl bg-slate-800/60 backdrop-blur-xl border border-slate-700/50 p-10 shadow-2xl hover:border-orange-500/30 transition-all duration-500">
+            <div className="text-center">
+              <h2 className="text-4xl font-bold text-white sm:text-5xl bg-gradient-to-r from-orange-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Ready to Elevate Your Sound?
+              </h2>
+              <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+                Join thousands of producers creating professional mixes with Amp Spot plugins. 
+                Download now and start your free trial — no credit card required.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/download"
+                  className="w-full sm:w-auto rounded-full bg-gradient-to-r from-orange-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:from-orange-500 hover:to-purple-500 transition-all duration-300 hover:scale-105 hover:shadow-orange-500/50"
+                >
+                  Download Free Trial
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="w-full sm:w-auto rounded-full bg-slate-700/50 backdrop-blur-sm border border-slate-600 px-8 py-4 text-base font-semibold text-white shadow-sm hover:bg-slate-600/50 hover:border-orange-500/50 transition-all duration-300"
+                >
+                  View Pricing
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950 pointer-events-none" />
+      </div>
+
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
@@ -88,9 +129,9 @@ export function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-white">Support</h3>
+                <h3 className="text-sm font-semibold leading-6 text-white">Resources</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {footerLinks.support.map((item) => (
+                  {footerLinks.resources.map((item) => (
                     <li key={item.name}>
                       <Link href={item.href} className="text-sm leading-6 text-gray-400 hover:text-white transition-colors">
                         {item.name}

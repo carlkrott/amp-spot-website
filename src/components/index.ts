@@ -7,3 +7,5 @@ export { PluginFeatures } from './PluginFeatures';
 export { BlogCard } from './BlogCard';
 export { BlogGrid } from './BlogGrid';
 export { LatestBlog } from './LatestBlog';
+export { CurrencySelector } from './CurrencySelector';
+export { AnimatedMeterBridge } from './AnimatedMeterBridge';

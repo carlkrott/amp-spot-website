@@ -1,10 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { CheckIcon } from '@heroicons/react/20/solid';
-
-export const metadata = {
-  title: 'Pricing | Amp Spot',
-  description: 'Choose the perfect plan for your production needs. Free trials available, affordable monthly plans, or save with lifetime access.',
-};
+import { useState, useEffect } from 'react';
+import { loadCurrencyPreference, convertPrice, formatPrice } from '@/lib/currency';
 
 const features = {
   free: [
@@ -61,6 +60,37 @@ const faqs = [
 ];
 
 export default function PricingPage() {
+  const [currency, setCurrency] = useState('USD');
+  const [prices, setPrices] = useState({
+    premium: 14.99,
+    lifetime: 199,
+  });
+
+  useEffect(() => {
+    // Load saved currency preference
+    const savedCurrency = loadCurrencyPreference();
+    setCurrency(savedCurrency);
+    updatePrices(savedCurrency);
+
+    // Listen for currency changes from header
+    const handleCurrencyChange = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const newCurrency = customEvent.detail.currency;
+      setCurrency(newCurrency);
+      updatePrices(newCurrency);
+    };
+
+    window.addEventListener('currencyChange', handleCurrencyChange);
+    return () => window.removeEventListener('currencyChange', handleCurrencyChange);
+  }, []);
+
+  const updatePrices = (currencyCode: string) => {
+    setPrices({
+      premium: convertPrice(14.99, currencyCode),
+      lifetime: convertPrice(199, currencyCode),
+    });
+  };
+
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Hero Section */}
@@ -135,7 +165,7 @@ export default function PricingPage() {
                 <p className="mt-2 text-sm text-orange-100">Everything you need to create</p>
               </div>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-white">$14.99</span>
+                <span className="text-4xl font-bold text-white">{formatPrice(prices.premium, currency)}</span>
                 <span className="text-orange-100">/month</span>
               </div>
               <ul role="list" className="space-y-4 mb-8">
@@ -161,7 +191,7 @@ export default function PricingPage() {
                 <p className="mt-2 text-sm text-gray-400">One payment, forever access</p>
               </div>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-white">$199</span>
+                <span className="text-4xl font-bold text-white">{formatPrice(prices.lifetime, currency)}</span>
                 <span className="text-gray-400">/one-time</span>
               </div>
               <ul role="list" className="space-y-4 mb-8">
