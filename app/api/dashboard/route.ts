@@ -2,14 +2,16 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import redis from '@/lib/redis';
 
+interface RecentDownload {
+  plugin_name: string;
+  download_count: number;
+  last_download: string;
+}
+
 export interface DashboardStats {
   total_downloads: number;
   total_plugins: number;
-  recent_downloads: Array<{
-    plugin_name: string;
-    download_count: number;
-    last_download: string;
-  }>;
+  recent_downloads: RecentDownload[];
   user_stats?: {
     user_id: string;
     downloads_count: number;
@@ -32,7 +34,7 @@ export async function GET(request: Request) {
     const totalDownloads = parseInt(downloadsResult.rows[0].total || '0');
 
     // Get recent downloads (top 10 most downloaded)
-    const recentResult = await query(`
+    const recentResult = await query<RecentDownload>(`
       SELECT name as plugin_name, download_count, updated_at as last_download
       FROM plugins
       ORDER BY download_count DESC, updated_at DESC

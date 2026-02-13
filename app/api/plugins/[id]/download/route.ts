@@ -5,10 +5,11 @@ import redis from '@/lib/redis';
 // GET /api/plugins/[id]/download - Download a plugin
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id);
+    const { id: idStr } = await params;
+    const id = parseInt(idStr);
     
     if (isNaN(id)) {
       return NextResponse.json(
@@ -77,10 +78,11 @@ export async function GET(
 // POST /api/plugins/[id]/download - Log download with user info
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id);
+    const { id: idStr } = await params;
+    const id = parseInt(idStr);
     
     if (isNaN(id)) {
       return NextResponse.json(
