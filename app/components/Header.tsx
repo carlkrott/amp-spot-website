@@ -9,43 +9,50 @@ export default function Header() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/plugins', label: 'Plugins' },
+    { href: '/pricing', label: 'Pricing' },
     { href: '/docs', label: 'Documentation' },
-    { href: '/about', label: 'About' },
   ];
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50">
+    <header className="glass sticky top-0 z-50 border-b border-[rgba(255,140,0,0.2)]">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                AmpSpot
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF8C00] to-[#CC7000] flex items-center justify-center amp-glow">
+                <span className="text-white font-bold text-xl">A</span>
+              </div>
+              <span className="text-xl font-bold text-white amp-glow-text">
+                Amp<span className="text-[#FF8C00]">Spot</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium"
+                className="text-gray-300 hover:text-[#FF8C00] transition-colors font-medium relative group"
               >
                 {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF8C00] group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
-              Get Started
-            </button>
+            <Link 
+              href="/dashboard"
+              className="glass-button text-white font-medium px-5 py-2 rounded-lg"
+            >
+              Dashboard
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 dark:text-gray-300 p-2"
+              className="text-gray-300 p-2 hover:text-[#FF8C00] transition-colors"
               aria-label="Toggle menu"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -61,20 +68,24 @@ export default function Header() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="md:hidden py-4 border-t border-[rgba(255,140,0,0.2)] glass-card mt-2 rounded-lg">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block py-2 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                className="block py-2 px-4 text-gray-300 hover:text-[#FF8C00] hover:bg-[rgba(255,140,0,0.1)] rounded transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <button className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
-              Get Started
-            </button>
+            <Link 
+              href="/dashboard"
+              className="block mt-2 mx-4 glass-button text-white font-medium py-2 rounded-lg text-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
           </div>
         )}
       </nav>

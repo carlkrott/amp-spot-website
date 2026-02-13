@@ -13,7 +13,15 @@ export default function PluginList({ initialCategory }: PluginListProps) {
   const [error, setError] = useState<string | null>(null);
   const [category, setCategory] = useState(initialCategory || '');
 
-  const categories = ['', 'amp', 'effect', 'utility', 'general'];
+  const categories = [
+    { value: '', label: 'All' },
+    { value: 'amp', label: 'Amplifiers' },
+    { value: 'effect', label: 'Effects' },
+    { value: 'compressor', label: 'Compressors' },
+    { value: 'equalizer', label: 'Equalizers' },
+    { value: 'reverb', label: 'Reverbs' },
+    { value: 'utility', label: 'Utilities' },
+  ];
 
   const fetchPlugins = useCallback(async () => {
     setLoading(true);
@@ -45,38 +53,42 @@ export default function PluginList({ initialCategory }: PluginListProps) {
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4">
-      <div className="mb-6 flex gap-2 flex-wrap">
-        {categories.map((cat) => (
-          <button
-            key={cat || 'all'}
-            onClick={() => setCategory(cat)}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              category === cat
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
-          >
-            {cat || 'All'}
-          </button>
-        ))}
+    <div className="w-full max-w-7xl mx-auto p-4">
+      <div className="mb-8 glass-card rounded-xl p-4">
+        <h2 className="text-white text-lg font-semibold mb-4">Filter by Category</h2>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              onClick={() => setCategory(cat.value)}
+              className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                category === cat.value
+                  ? 'bg-gradient-to-r from-[#FF8C00] to-[#CC7000] text-white font-medium amp-glow'
+                  : 'glass text-gray-300 hover:text-white hover:border-[#FF8C00]'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading && (
         <div className="flex justify-center items-center h-32">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FF8C00]"></div>
         </div>
       )}
 
       {error && (
-        <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 p-4 rounded-lg mb-4">
-          {error}
+        <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-lg mb-4 glass-card">
+          <p className="font-medium">Error: {error}</p>
         </div>
       )}
 
       {!loading && !error && plugins.length === 0 && (
-        <div className="text-center text-gray-500 dark:text-gray-400 py-8">
-          No plugins found
+        <div className="text-center text-gray-400 py-12 glass-card rounded-xl">
+          <p className="text-lg">No plugins found</p>
+          <p className="text-sm mt-2">Try selecting a different category</p>
         </div>
       )}
 
