@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 
 export default function LEDMeterBar() {
   const [meters, setMeters] = useState<number[]>(() => Array(24).fill(0));
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
 
   // SSL-style color segments
   const getSegmentColor = (level: number, index: number): string => {
