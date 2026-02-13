@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import Footer from './components/Footer';
 import PluginList from './components/PluginList';
 import Link from 'next/link';
 
@@ -103,11 +104,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-[rgba(255,140,0,0.2)]">
-        <div className="max-w-6xl mx-auto text-center text-gray-500">
-          <p>&copy; 2025 Amp Spot. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

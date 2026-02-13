@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import LEDMeterBar from './LEDMeterBar';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,10 +12,12 @@ export default function Header() {
     { href: '/plugins', label: 'Plugins' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/docs', label: 'Documentation' },
+    { href: '/youtube', label: 'YouTube' },
   ];
 
   return (
-    <header className="glass sticky top-0 z-50 border-b border-[rgba(255,140,0,0.2)]">
+    <>
+      <header className="glass sticky top-0 z-50 border-b border-[rgba(255,140,0,0.2)]">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
@@ -90,5 +93,7 @@ export default function Header() {
         )}
       </nav>
     </header>
+    <LEDMeterBar />
+    </>
   );
 }
