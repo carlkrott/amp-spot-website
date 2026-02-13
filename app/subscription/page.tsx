@@ -78,7 +78,7 @@ export default function SubscriptionPage() {
             Free vs <span className="text-[#FF8C00]">Paid</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Start with our free tier to get familiar with our plugins, then upgrade when you're ready for more power and features.
+            Start with our free tier to get familiar with our plugins, then upgrade when you&apos;re ready for more power and features.
           </p>
         </div>
       </section>
@@ -227,7 +227,7 @@ export default function SubscriptionPage() {
               },
               {
                 q: "Do you offer refunds?",
-                a: "Yes, we offer a 14-day money-back guarantee. If you're not satisfied, contact support for a full refund.",
+                a: "Yes, we offer a 14-day money-back guarantee. If you&apos;re not satisfied, contact support for a full refund.",
               },
             ].map((faq, i) => (
               <div key={i} className="glass-card rounded-lg p-6">
