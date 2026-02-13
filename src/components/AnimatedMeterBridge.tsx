@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface MeterState {
   level: number;
@@ -24,36 +24,36 @@ export function AnimatedMeterBridge() {
 
   const animationRef = useRef<number | undefined>(undefined);
   const lastUpdateRef = useRef<number>(0);
+  const startTimeRef = useRef<number>(Date.now());
 
   // Generate smooth random target levels
-  const updateTargetLevels = () => {
+  const updateTargetLevels = useCallback(() => {
     setMeters(prev => prev.map((meter, i) => {
       // Create correlated levels between adjacent meters for more natural movement
-      const time = Date.now() / 1000;
+      const time = (Date.now() - startTimeRef.current) / 1000;
       const baseFreq = 0.5 + (i % 4) * 0.3;
       const secondaryFreq = 0.3 + (i % 3) * 0.2;
-      
+
       // Combine sine waves for organic movement
       const wave1 = Math.sin(time * baseFreq + i * 0.5);
       const wave2 = Math.sin(time * secondaryFreq + i * 0.3) * 0.5;
       const wave3 = Math.sin(time * 1.7 + i * 0.7) * 0.25;
-      
+
       const normalizedWave = (wave1 + wave2 + wave3) / 1.75;
-      
-      // Map to 0-1 range with some randomness
+
+      // Map to 0-1 range
       const target = Math.max(0, Math.min(1, (normalizedWave + 1) / 2));
-      
+
       return {
         ...meter,
         targetLevel: target,
       };
     }));
-  };
+  }, []);
 
   // Animate with VU-style ballistics
-  const animate = () => {
+  const animate = useCallback(() => {
     const now = Date.now();
-    const delta = (now - lastUpdateRef.current) / 1000;
     lastUpdateRef.current = now;
 
     setMeters(prev => prev.map(meter => {
@@ -92,13 +92,13 @@ export function AnimatedMeterBridge() {
     }));
 
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, []);
 
   // Update targets periodically
   useEffect(() => {
     const interval = setInterval(updateTargetLevels, 150);
     return () => clearInterval(interval);
-  }, []);
+  }, [updateTargetLevels]);
 
   // Start animation loop
   useEffect(() => {
@@ -109,7 +109,7 @@ export function AnimatedMeterBridge() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [animate]);
 
   const getSegmentColor = (index: number) => {
     if (index < 8) return 'bg-emerald-500'; // Green

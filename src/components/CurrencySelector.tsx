@@ -8,19 +8,17 @@ interface CurrencySelectorProps {
 }
 
 export function CurrencySelector({ onCurrencyChange }: CurrencySelectorProps) {
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Load saved preference or detect user's currency
+  // Initialize state with derived value to avoid setState in effect
+  const [selectedCurrency, setSelectedCurrency] = useState(() => {
     const saved = loadCurrencyPreference();
     const detected = saved === 'USD' ? detectUserCurrency() : saved;
-    setSelectedCurrency(detected);
     if (detected !== 'USD') {
       saveCurrencyPreference(detected);
     }
-  }, []);
+    return detected;
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

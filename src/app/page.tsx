@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { PluginGrid, LatestBlog } from '@/components';
+import { PluginGrid, LatestBlog, AudioBars } from '@/components';
 import { getPhase1Plugins, getPhase2Plugins } from '@/lib/plugins';
 import { CheckIcon, EnvelopeIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
@@ -40,18 +40,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-700 to-red-800 py-24 sm:py-32">
         {/* VU meter aesthetic background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(40)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${30 + Math.random() * 50}%`,
-                  opacity: 0.2 + Math.random() * 0.5,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={40} minHeight={30} maxHeight={50} minOpacity={0.2} maxOpacity={0.5} />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -191,18 +180,7 @@ export default function HomePage() {
       <section className="py-24 bg-gradient-to-br from-orange-600 to-red-800 relative overflow-hidden">
         {/* VU meter aesthetic background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(30)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${30 + Math.random() * 50}%`,
-                  opacity: 0.2 + Math.random() * 0.5,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={30} minHeight={30} maxHeight={50} minOpacity={0.2} maxOpacity={0.5} />
         </div>
 
         <div className="relative mx-auto max-w-4xl px-6 lg:px-8 text-center">

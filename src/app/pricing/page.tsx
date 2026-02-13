@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { useState, useEffect } from 'react';
 import { loadCurrencyPreference, convertPrice, formatPrice } from '@/lib/currency';
+import { AudioBars } from '@/components';
 
 const features = {
   free: [
@@ -66,6 +67,13 @@ export default function PricingPage() {
     lifetime: 199,
   });
 
+  const updatePrices = (currencyCode: string) => {
+    setPrices({
+      premium: convertPrice(14.99, currencyCode),
+      lifetime: convertPrice(199, currencyCode),
+    });
+  };
+
   useEffect(() => {
     // Load saved currency preference
     const savedCurrency = loadCurrencyPreference();
@@ -84,31 +92,13 @@ export default function PricingPage() {
     return () => window.removeEventListener('currencyChange', handleCurrencyChange);
   }, []);
 
-  const updatePrices = (currencyCode: string) => {
-    setPrices({
-      premium: convertPrice(14.99, currencyCode),
-      lifetime: convertPrice(199, currencyCode),
-    });
-  };
-
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-700 to-red-800 py-24 sm:py-32">
         {/* VU meter aesthetic background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${40 + Math.random() * 40}%`,
-                  opacity: 0.3 + Math.random() * 0.7,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={20} minHeight={40} maxHeight={40} minOpacity={0.3} maxOpacity={0.7} />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -255,18 +245,7 @@ export default function PricingPage() {
       {/* CTA Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 to-red-800 py-16 sm:py-24">
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(30)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${30 + Math.random() * 50}%`,
-                  opacity: 0.2 + Math.random() * 0.5,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={30} minHeight={30} maxHeight={50} minOpacity={0.2} maxOpacity={0.5} />
         </div>
 
         <div className="relative mx-auto max-w-4xl px-6 lg:px-8 text-center">

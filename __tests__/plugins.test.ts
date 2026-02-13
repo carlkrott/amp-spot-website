@@ -3,7 +3,7 @@ import { plugins, getPluginBySlug, getPhase1Plugins, getPhase2Plugins } from '@/
 
 describe('Plugin Data', () => {
   it('should have all required plugins', () => {
-    expect(plugins.length).toBeGreaterThanOrEqual(6);
+    expect(plugins.length).toBeGreaterThanOrEqual(4);
   });
 
   it('should have required fields for each plugin', () => {

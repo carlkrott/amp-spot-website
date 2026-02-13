@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getAllPosts, getAllTags } from '@/lib/blog';
+import { AudioBars } from '@/components';
 
 export const metadata = {
   title: 'Blog | Amp Spot',
@@ -16,18 +17,7 @@ export default function BlogPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-700 to-red-800 py-24 sm:py-32">
         {/* VU meter aesthetic background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${40 + Math.random() * 40}%`,
-                  opacity: 0.3 + Math.random() * 0.7,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={20} minHeight={40} maxHeight={40} minOpacity={0.3} maxOpacity={0.7} />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">

@@ -9,3 +9,4 @@ export { BlogGrid } from './BlogGrid';
 export { LatestBlog } from './LatestBlog';
 export { CurrencySelector } from './CurrencySelector';
 export { AnimatedMeterBridge } from './AnimatedMeterBridge';
+export { AudioBars } from './AudioBars';

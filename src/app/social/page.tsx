@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { AudioBars } from '@/components';
 
 export default function SocialMediaPage() {
   const [activeTab, setActiveTab] = useState<'all' | 'youtube' | 'instagram' | 'facebook'>('all');
@@ -120,18 +121,7 @@ export default function SocialMediaPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-purple-600 to-pink-600 py-24 sm:py-32">
         {/* Animated background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${40 + Math.random() * 40}%`,
-                  opacity: 0.3 + Math.random() * 0.7,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={20} minHeight={40} maxHeight={40} minOpacity={0.3} maxOpacity={0.7} />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -320,18 +310,7 @@ export default function SocialMediaPage() {
       {/* CTA Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-purple-600 to-pink-600 py-16 sm:py-24">
         <div className="absolute inset-0 opacity-10">
-          <div className="flex h-full justify-around items-center">
-            {[...Array(30)].map((_, i) => (
-              <div
-                key={i}
-                className="w-1 bg-gradient-to-t from-green-500 via-yellow-500 to-red-500 rounded-full"
-                style={{
-                  height: `${30 + Math.random() * 50}%`,
-                  opacity: 0.2 + Math.random() * 0.5,
-                }}
-              />
-            ))}
-          </div>
+          <AudioBars count={30} minHeight={30} maxHeight={50} minOpacity={0.2} maxOpacity={0.5} />
         </div>
 
         <div className="relative mx-auto max-w-4xl px-6 lg:px-8 text-center">
