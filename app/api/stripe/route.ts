@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { query } from '@/lib/db';
 import redis from '@/lib/redis';
 
 // This is a basic Stripe integration scaffold
@@ -154,6 +153,9 @@ export async function POST(request: Request) {
       checkout_url: session.url,
     });
     */
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used in Stripe implementation above
+    const _stripeUrls = { success_url, cancel_url };
 
     // Mock response for development
     const mockSessionId = `mock_session_${Date.now()}`;
