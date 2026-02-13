@@ -1,15 +1,26 @@
 import { Pool, PoolConfig } from 'pg';
 
-const config: PoolConfig = {
-  host: process.env.POSTGRES_HOST || '100.64.0.4',
-  port: parseInt(process.env.POSTGRES_PORT || '24271', 10),
-  user: process.env.POSTGRES_USER || 'amp_spot',
-  password: process.env.POSTGRES_PASSWORD || '',
-  database: process.env.POSTGRES_DATABASE || 'amp_spot',
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-};
+// Use DATABASE_URL for Supabase connection (pooler recommended)
+const connectionString = process.env.DATABASE_URL;
+
+const config: PoolConfig = connectionString 
+  ? {
+      connectionString,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    }
+  : {
+      // Fallback to individual env vars (for local dev)
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    };
 
 // Singleton pool instance
 let pool: Pool | null = null;
