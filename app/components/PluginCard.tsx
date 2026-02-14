@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { trackDownload } from '@/lib/analytics';
 
 export interface PluginData {
   id: number;
@@ -17,6 +18,15 @@ interface PluginCardProps {
   plugin: PluginData;
   onDownload?: (plugin: PluginData) => void;
   downloading?: boolean;
+}
+
+function detectPlatform(): string {
+  if (typeof window === 'undefined') return 'unknown';
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.includes('windows')) return 'windows';
+  if (userAgent.includes('mac') || userAgent.includes('osx')) return 'macos';
+  if (userAgent.includes('linux')) return 'linux';
+  return 'unknown';
 }
 
 export default function PluginCard({ plugin, onDownload, downloading = false }: PluginCardProps) {
@@ -58,7 +68,11 @@ export default function PluginCard({ plugin, onDownload, downloading = false }: 
       </div>
       
       <button
-        onClick={() => onDownload?.(plugin)}
+        onClick={() => {
+          const platform = detectPlatform();
+          trackDownload(plugin.id, plugin.name, platform, plugin.version);
+          onDownload?.(plugin);
+        }}
         disabled={downloading}
         className={`w-full glass-button text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 ${
           downloading ? 'opacity-50 cursor-not-allowed' : ''

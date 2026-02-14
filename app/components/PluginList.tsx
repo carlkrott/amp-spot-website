@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PluginCard, { PluginData } from './PluginCard';
 import toast from 'react-hot-toast';
+import { getVersion } from '@/lib/version';
+import { trackCategoryFilter } from '@/lib/analytics';
 
 interface PluginListProps {
   initialCategory?: string;
@@ -59,9 +61,9 @@ export default function PluginList({ initialCategory }: PluginListProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: 'anonymous', // TODO: Get from auth when implemented
+          user_id: 'anonymous', // Will be replaced by auth when implemented
           platform: detectPlatform(),
-          version: '1.0.0', // TODO: Use actual version
+          version: getVersion(),
         }),
       });
 
@@ -106,7 +108,12 @@ export default function PluginList({ initialCategory }: PluginListProps) {
           {categories.map((cat) => (
             <button
               key={cat.value}
-              onClick={() => setCategory(cat.value)}
+              onClick={() => {
+                setCategory(cat.value);
+                if (cat.value) {
+                  trackCategoryFilter(cat.label);
+                }
+              }}
               className={`px-4 py-2 rounded-lg transition-all duration-300 ${
                 category === cat.value
                   ? 'bg-gradient-to-r from-[#FF8C00] to-[#CC7000] text-white font-medium amp-glow'

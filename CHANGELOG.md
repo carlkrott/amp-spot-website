@@ -4,6 +4,43 @@ All notable changes to the Amp Spot website will be documented in this file.
 
 ## [Unreleased]
 
+### Added - 2026-02-14 (Sprint 4)
+- Version configuration
+  - `lib/version.ts` - Single source of truth for application version
+  - `VERSION` constant and `getVersion()` helper
+  - Integrated into `PluginList.tsx` download handler
+  - Version metadata added to `app/layout.tsx`
+- Analytics integration (Plausible)
+  - `app/components/PlausibleScript.tsx` - Plausible tracking script component
+  - `lib/analytics.ts` - Analytics helper functions
+  - Event tracking for downloads, page views, category filters
+  - Integrated into `app/layout.tsx`, `PluginCard.tsx`, `PluginList.tsx`
+- Testing infrastructure
+  - Installed vitest v4.0.18 with coverage support
+  - Installed @testing-library/react, @testing-library/jest-dom, @testing-library/user-event
+  - Created `vitest.config.ts` - Test configuration
+  - Created `__tests__/setup.ts` - Test setup with mocks
+  - Added test scripts to package.json: test, test:ui, test:coverage
+- Unit tests
+  - `__tests__/validations.test.ts` - 60 tests covering all 13 validation schemas (100% coverage)
+  - `__tests__/PluginCard.test.tsx` - 20 tests for PluginCard component
+  - `__tests__/sample.test.ts` - Sample test for setup verification
+  - Total: 82 tests passing
+
+### Dependencies - 2026-02-14 (Sprint 4)
+- Added `vitest` v4.0.18
+- Added `@vitest/ui` v4.0.18
+- Added `@vitest/coverage-v8` v4.0.18
+- Added `@testing-library/react` v16.3.2
+- Added `@testing-library/jest-dom` v6.9.1
+- Added `@testing-library/user-event` v14.6.1
+- Added `jsdom` v28.0.0
+
+### Changed - 2026-02-14 (Sprint 4)
+- `app/layout.tsx` - Added PlausibleScript component and version metadata
+- `app/components/PluginCard.tsx` - Added download event tracking with analytics
+- `app/components/PluginList.tsx` - Added category filter event tracking
+
 ### Added - 2026-02-14 (Sprint 3)
 - Input validation completion (100% API coverage)
   - `/api/dashboard/route.ts` - GET and POST validation
