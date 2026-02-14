@@ -1,7 +1,7 @@
 # Website Development - Task List
 
-**Date:** 2026-02-13 22:56 GMT
-**Generated from:** Phase 2 (Plan) Assessment
+**Date:** 2026-02-14 01:26 GMT
+**Generated from:** Phase 2 (Plan) Assessment - Cron Session
 
 ---
 
@@ -15,34 +15,14 @@
 
 ## 🔴 P0 - Critical Tasks
 
-### T001: Commit Blog Integration
-**Status:** Pending
-**Estimated Time:** 10 minutes
-**Description:** Blog API and pages are untracked and need to be committed.
-
-**Files:**
-- `app/api/blog/route.ts` - Blog API endpoint
-- `app/blog/[slug]/page.tsx` - Blog post page
-- `app/blog/page.tsx` - Blog listing page
-
-**Action Items:**
-- [ ] Review all three files for correctness
-- [ ] Add to git staging
-- [ ] Create commit with descriptive message
-- [ ] Push to origin/master
-
-**Impact:** Blog functionality at risk of data loss
-
----
-
-### T002: Create Blog Posts Database Table
+### T001: Verify Blog Posts Database Table
 **Status:** Pending
 **Estimated Time:** 15 minutes
-**Description:** Blog API expects `blog_posts` table but it doesn't exist.
+**Description:** Blog API expects `blog_posts` table - verify it exists.
 
 **Schema Required:**
 ```sql
-CREATE TABLE blog_posts (
+CREATE TABLE IF NOT EXISTS blog_posts (
   id SERIAL PRIMARY KEY,
   slug VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -58,117 +38,104 @@ CREATE TABLE blog_posts (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_blog_posts_slug ON blog_posts(slug);
-CREATE INDEX idx_blog_posts_published ON blog_posts(published, published_at DESC);
-CREATE INDEX idx_blog_posts_category ON blog_posts(category);
+CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
+CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON blog_posts(published, published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_blog_posts_category ON blog_posts(category);
 ```
 
 **Action Items:**
 - [ ] Connect to PostgreSQL (amp_spot DB)
-- [ ] Run schema creation script
-- [ ] Verify table created successfully
+- [ ] Check if table exists: `\dt blog_posts`
+- [ ] If missing, run schema creation
 - [ ] Create seed data for testing
+- [ ] Verify table accessible from API
 
 **Impact:** Blog pages will error without this table
 
 ---
 
-### T003: Implement Download Logic in PluginList
+### T002: Add Download Files to Server
 **Status:** Pending
-**Estimated Time:** 20 minutes
-**Description:** Download button calls placeholder function, needs real implementation.
+**Estimated Time:** 30 minutes
+**Description:** Download API returns URLs but files need to exist on server.
 
-**Current Code:**
-```typescript
-function handleDownload(plugin: PluginData) {
-  // TODO: Implement download logic
-  console.log('Download:', plugin.name);
-}
-```
-
-**Required Implementation:**
-```typescript
-async function handleDownload(plugin: PluginData) {
-  try {
-    // Call download API
-    const response = await fetch(`/api/plugins/${plugin.id}/download`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user_id: 'anonymous', // TODO: Get from auth
-        platform: 'unknown', // TODO: Detect browser
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to download');
-    }
-
-    const data = await response.json();
-    
-    // Trigger browser download
-    window.location.href = data.plugin.download_url;
-    
-    // Show success message (TODO: Add toast notification)
-    alert(`Downloading ${plugin.name} v${plugin.version}`);
-  } catch (err) {
-    console.error('Download error:', err);
-    alert('Download failed. Please try again.');
-  }
-}
-```
+**Current State:**
+- API endpoint: `/api/plugins/[id]/download`
+- Returns: `download_url` pointing to `/downloads/`
+- Files needed: VST bundles for each plugin
 
 **Action Items:**
-- [ ] Implement async download handler
-- [ ] Add loading state to button
-- [ ] Add error handling with user feedback
-- [ ] Test with actual plugin download
+- [ ] Create `public/downloads/` directory
+- [ ] Copy built VST files from plugin projects
+- [ ] Verify file URLs are correct
+- [ ] Test actual download flow
 
-**Impact:** Download buttons don't work
+**Impact:** Downloads will 404 without files
+
+---
+
+### T003: Add robots.txt
+**Status:** Pending
+**Estimated Time:** 5 minutes
+**Description:** Create robots.ts for SEO.
+
+**Action Items:**
+- [ ] Create `app/robots.ts`
+- [ ] Add sitemap reference
+
+**Impact:** Essential for SEO
+
+---
+
+### T004: Add sitemap.xml
+**Status:** Pending
+**Estimated Time:** 10 minutes
+**Description:** Create dynamic sitemap for SEO.
+
+**Action Items:**
+- [ ] Create `app/sitemap.ts`
+- [ ] Include all pages
+- [ ] Include dynamic routes (plugins, blog posts)
+
+**Impact:** Essential for SEO
 
 ---
 
 ## 🟡 P1 - Important Tasks
 
-### T004: Add Error Boundaries
+### T005: Add OpenGraph and Twitter Cards
+**Status:** Pending
+**Estimated Time:** 20 minutes
+**Description:** Add social sharing metadata.
+
+**Action Items:**
+- [ ] Update `app/layout.tsx` metadata
+- [ ] Add OpenGraph tags
+- [ ] Add Twitter Card tags
+- [ ] Test with social preview tools
+
+**Impact:** Better social sharing
+
+---
+
+### T006: Add Error Boundaries
 **Status:** Pending
 **Estimated Time:** 30 minutes
-**Description:** Add React Error Boundaries to catch and handle component errors gracefully.
+**Description:** Add React Error Boundaries for better error handling.
 
 **Action Items:**
 - [ ] Create `app/components/ErrorBoundary.tsx`
-- [ ] Wrap main app layout in ErrorBoundary
-- [ ] Add fallback UI with error message
-- [ ] Add error logging (console or error tracking service)
+- [ ] Wrap main app layout
+- [ ] Add fallback UI
 
 **Impact:** Better UX, easier debugging
 
 ---
 
-### T005: Add Loading States to All Async Operations
-**Status:** Pending
-**Estimated Time:** 20 minutes
-**Description:** Ensure all async operations have visible loading indicators.
-
-**Components to Check:**
-- `app/plugins/page.tsx` - ✅ Has loading state
-- `app/dashboard/page.tsx` - ❓ Verify
-- `app/blog/page.tsx` - ❓ Verify
-- `app/blog/[slug]/page.tsx` - ❓ Verify
-
-**Action Items:**
-- [ ] Audit all async components
-- [ ] Add skeleton loaders or spinners where missing
-- [ ] Test loading states
-
-**Impact:** Better perceived performance
-
----
-
-### T006: Implement Real Stripe Payment Processing
+### T007: Implement Real Stripe Payment Processing
 **Status:** Pending
 **Estimated Time:** 2-3 hours
-**Description:** Current Stripe integration is mock only. Needs real implementation.
+**Description:** Replace mock Stripe with real implementation.
 
 **Prerequisites:**
 - [ ] Stripe API keys (test and production)
@@ -176,204 +143,162 @@ async function handleDownload(plugin: PluginData) {
 
 **Action Items:**
 - [ ] Install `stripe` npm package
-- [ ] Configure Stripe client with environment variables
-- [ ] Implement real checkout session creation in `/api/stripe` (POST)
-- [ ] Implement webhook handler for payment confirmation
-- [ ] Update `/api/stripe` (PUT) to verify webhooks
-- [ ] Test with Stripe test cards
-- [ ] Add error handling for failed payments
+- [ ] Configure Stripe client
+- [ ] Implement checkout session creation
+- [ ] Implement webhook handler
+- [ ] Test with test cards
 
 **Impact:** Revenue functionality
 
 ---
 
-### T007: Add User Authentication
+### T008: Add User Authentication
 **Status:** Pending
 **Estimated Time:** 3-4 hours
 **Description:** Add NextAuth.js for user authentication.
 
 **Action Items:**
 - [ ] Install `next-auth` npm package
-- [ ] Configure auth providers (Google, GitHub, email/password)
-- [ ] Create database tables for users and sessions
+- [ ] Configure auth providers
+- [ ] Create database tables
 - [ ] Add login/signup pages
-- [ ] Protect API routes with authentication
-- [ ] Add user context to app
-- [ ] Test authentication flow
+- [ ] Protect API routes
 
 **Impact:** Required for downloads, dashboard personalization
 
 ---
 
-### T008: Create Download Directory and File Storage
+### T009: Add Input Validation
 **Status:** Pending
-**Estimated Time:** 30 minutes
-**Description:** Download API returns URLs but files don't exist on server.
+**Estimated Time:** 1 hour
+**Description:** Add zod for API input validation.
 
 **Action Items:**
-- [ ] Create `public/downloads/` directory
-- [ ] Copy built VST files from plugin projects
-- [ ] Create download script to automate file copying
-- [ ] Add file to git or use build script
+- [ ] Install `zod` npm package
+- [ ] Add validation to all API routes
+- [ ] Add validation schemas
+- [ ] Test validation
 
-**Impact:** Downloads will 404 without files
+**Impact:** Security
 
 ---
 
 ## 🟢 P2 - Enhancement Tasks
 
-### T009: SEO Optimization
+### T010: Add Rate Limiting
 **Status:** Pending
 **Estimated Time:** 1 hour
-**Description:** Add meta tags, sitemap, and robots.txt for better search rankings.
+**Description:** Add rate limiting to API routes.
 
 **Action Items:**
-- [ ] Add metadata to `layout.tsx` (global)
-- [ ] Add metadata to each page
-- [ ] Create `app/sitemap.ts` for dynamic sitemap
-- [ ] Create `app/robots.ts` for robots.txt
-- [ ] Add OpenGraph and Twitter cards
-- [ ] Test with Google Rich Results Test
+- [ ] Install rate limiting middleware
+- [ ] Apply to sensitive routes
+- [ ] Configure limits
 
-**Impact:** Better search engine visibility
+**Impact:** Security, abuse prevention
 
 ---
 
-### T010: Analytics Tracking
+### T011: Analytics Tracking
 **Status:** Pending
 **Estimated Time:** 1 hour
-**Description:** Add analytics to track user behavior.
+**Description:** Add analytics for user behavior tracking.
 
 **Action Items:**
-- [ ] Choose analytics provider (Plausible, Google Analytics, etc.)
-- [ ] Install analytics SDK
+- [ ] Choose analytics provider
+- [ ] Install SDK
 - [ ] Add page view tracking
-- [ ] Add event tracking (downloads, button clicks)
-- [ ] Create analytics dashboard
-- [ ] Test tracking
+- [ ] Add event tracking
 
 **Impact:** Data-driven decisions
 
 ---
 
-### T011: Email Notifications
+### T012: Toast Notifications
 **Status:** Pending
-**Estimated Time:** 2 hours
-**Description:** Add email notifications for important events.
+**Estimated Time:** 1 hour
+**Description:** Replace `alert()` with toast notifications.
 
 **Action Items:**
-- [ ] Choose email service (Resend, SendGrid, etc.)
-- [ ] Install email SDK
-- [ ] Create email templates
-- [ ] Add email triggers:
-  - [ ] Download confirmation
-  - [ ] Purchase receipt
-  - [ ] Password reset
-  - [ ] Newsletter signup
-- [ ] Test email delivery
+- [ ] Install toast library
+- [ ] Create toast context
+- [ ] Replace alerts with toasts
 
-**Impact:** Better user communication
-
----
-
-### T012: Download License System
-**Status:** Pending
-**Estimated Time:** 3-4 hours
-**Description:** Create license key generation and validation system.
-
-**Action Items:**
-- [ ] Design license key format
-- [ ] Create license generation API
-- [ ] Create license validation API
-- [ ] Add license checking to downloads
-- [ ] Store licenses in database
-- [ ] Add license management to dashboard
-- [ ] Test license flow
-
-**Impact:** Monetization, plugin protection
+**Impact:** Better UX
 
 ---
 
 ### T013: Unit Tests
 **Status:** Pending
 **Estimated Time:** 4-6 hours
-**Description:** Add comprehensive unit tests for critical components and API routes.
+**Description:** Add comprehensive unit tests.
 
 **Action Items:**
-- [ ] Install testing dependencies (Jest/Vitest, React Testing Library)
+- [ ] Install testing dependencies
 - [ ] Configure test environment
-- [ ] Write tests for components:
-  - [ ] Header
-  - [ ] PluginCard
-  - [ ] PluginList
-- [ ] Write tests for API routes:
-  - [ ] /api/plugins
-  - [ ] /api/plugins/[id]/download
-  - [ ] /api/blog
-  - [ ] /api/dashboard
-- [ ] Add CI/CD test pipeline
+- [ ] Write tests for components
+- [ ] Write tests for API routes
 - [ ] Aim for 80%+ coverage
 
-**Impact:** Code reliability, easier refactoring
+**Impact:** Code reliability
 
 ---
 
 ### T014: E2E Tests with Playwright
 **Status:** Pending
 **Estimated Time:** 4-6 hours
-**Description:** Add end-to-end tests for critical user flows.
+**Description:** Add end-to-end tests for critical flows.
 
 **Action Items:**
 - [ ] Install Playwright
-- [ ] Configure Playwright
-- [ ] Write E2E tests:
-  - [ ] Homepage renders
-  - [ ] Plugin browsing and filtering
-  - [ ] Plugin page loads
-  - [ ] Blog listing and reading
-  - [ ] Pricing page
-  - [ ] Checkout flow (mock)
+- [ ] Write E2E tests
 - [ ] Add screenshot testing
-- [ ] Add to CI/CD pipeline
 
-**Impact:** Catch integration issues before deployment
-
----
-
-### T015: Add Toast Notifications
-**Status:** Pending
-**Estimated Time:** 1 hour
-**Description:** Replace `alert()` calls with toast notifications for better UX.
-
-**Action Items:**
-- [ ] Install toast library (react-hot-toast or similar)
-- [ ] Create toast context/provider
-- [ ] Add toast for:
-  - [ ] Download success/failure
-  - [ ] API errors
-  - [ ] Form submissions
-- [ ] Style toast to match brand
-
-**Impact:** Better UX, no browser alerts
+**Impact:** Catch integration issues
 
 ---
 
-### T016: Improve Mobile Responsiveness
+### T015: Email Notifications
 **Status:** Pending
 **Estimated Time:** 2 hours
-**Description:** Test and improve mobile experience across all pages.
+**Description:** Add email notifications for key events.
 
 **Action Items:**
-- [ ] Audit all pages on mobile viewport
-- [ ] Test on actual mobile devices (Chrome DevTools)
-- [ ] Fix responsive issues:
-  - [ ] Navigation menu
-  - [ ] Plugin cards
-  - [ ] Tables (if any)
-  - [ ] Forms
-- [ ] Add mobile-specific optimizations
+- [ ] Choose email service
+- [ ] Create email templates
+- [ ] Add email triggers
 
-**Impact:** Better mobile UX
+**Impact:** Better user communication
+
+---
+
+### T016: Download License System
+**Status:** Pending
+**Estimated Time:** 3-4 hours
+**Description:** Create license key generation and validation.
+
+**Action Items:**
+- [ ] Design license key format
+- [ ] Create license generation API
+- [ ] Create license validation API
+- [ ] Add license checking to downloads
+
+**Impact:** Monetization, plugin protection
+
+---
+
+## Completed Tasks (From Previous Session)
+
+### ✅ T003_old: Implement Download Logic in PluginList
+**Status:** Complete
+**Completed:** 2026-02-13
+**Description:** Download functionality fully implemented with platform detection, API calls, and loading states.
+
+**Features:**
+- Async download handler with error handling
+- Loading state per plugin
+- Platform detection (macOS/Windows/Linux)
+- Download tracking via API endpoint
 
 ---
 
@@ -381,30 +306,31 @@ async function handleDownload(plugin: PluginData) {
 
 | Priority | Tasks | Est. Time |
 |----------|-------|-----------|
-| 🔴 P0 Critical | 3 | 45 min |
-| 🟡 P1 Important | 5 | 6.5 hours |
-| 🟢 P2 Enhancement | 8 | 17.5 hours |
-| **Total** | **16** | **~24.5 hours** |
+| 🔴 P0 Critical | 4 | 1 hour |
+| 🟡 P1 Important | 5 | 7.5 hours |
+| 🟢 P2 Enhancement | 7 | 15.5 hours |
+| **Total** | **16** | **~24 hours** |
 
 ---
 
 ## Recommended Sprint Plan
 
-**Sprint 1 (Immediate - Today):**
-- T001: Commit blog integration (10 min)
-- T002: Create blog_posts table (15 min)
-- T003: Implement download logic (20 min)
+**Sprint 1 (Immediate - This Session):**
+- T001: Verify blog_posts table (15 min)
+- T002: Add download files (30 min)
+- T003: Add robots.txt (5 min)
+- T004: Add sitemap.xml (10 min)
 
 **Sprint 2 (This Week):**
-- T004: Error boundaries (30 min)
-- T005: Loading states (20 min)
-- T008: Download directory (30 min)
+- T005: OpenGraph/Twitter cards (20 min)
+- T006: Error boundaries (30 min)
+- T009: Input validation (1 hour)
 
 **Sprint 3 (Next Week):**
-- T006: Real Stripe (2-3 hours)
-- T007: Authentication (3-4 hours)
+- T007: Real Stripe (2-3 hours)
+- T008: Authentication (3-4 hours)
 
 ---
 
-**Task List Generated:** 2026-02-13 22:56 GMT
+**Task List Updated:** 2026-02-14 01:26 GMT
 **Ready for Phase 3:** ✅ Yes

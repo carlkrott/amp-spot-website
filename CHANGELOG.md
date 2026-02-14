@@ -4,6 +4,24 @@ All notable changes to the Amp Spot website will be documented in this file.
 
 ## [Unreleased]
 
+### Added - 2026-02-14
+- SEO optimization
+  - `app/robots.ts` - robots.txt for search engine crawling
+  - `app/sitemap.ts` - dynamic sitemap for better SEO
+
+### Changed - 2026-02-14
+- Updated task list for cron session
+- Session log created for tracking progress
+
+### Known Issues - 2026-02-14
+- PostgreSQL connection timeout to 100.64.0.4:24271 (infrastructure issue)
+- blog_posts table cannot be verified/created due to DB connection
+- Download files need to be added to `public/downloads/` directory
+
+---
+
+## [Unreleased - Previous]
+
 ### Added - 2026-02-13
 - Blog integration with API routes and pages
   - `/api/blog` - Blog API endpoint for fetching posts
@@ -20,14 +38,6 @@ All notable changes to the Amp Spot website will be documented in this file.
 - PluginCard component
   - Added `downloading` prop for loading state
   - Improved download button UX with spinner
-
-### Fixed - 2026-02-13
-- None
-
-### Known Issues - 2026-02-13
-- `blog_posts` database table needs to be created (PostgreSQL connection timeout during setup)
-- Download files need to be added to `public/downloads/` directory
-- User authentication not yet implemented (downloads tracked as anonymous)
 
 ---
 
