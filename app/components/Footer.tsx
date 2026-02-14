@@ -12,9 +12,23 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF8C00] to-[#CC7000] flex items-center justify-center amp-glow">
-                <span className="text-white font-bold text-xl">A</span>
-              </div>
+              <svg className="w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                  <linearGradient id="footerLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#FFA733"/>
+                    <stop offset="50%" stopColor="#FF8C00"/>
+                    <stop offset="100%" stopColor="#CC7000"/>
+                  </linearGradient>
+                </defs>
+                <rect x="6" y="68" width="88" height="24" rx="4" fill="#CC7000"/>
+                <rect x="10" y="72" width="80" height="2" rx="1" fill="#FF8C00" opacity={0.6}/>
+                <rect x="10" y="38" width="20" height="35" rx="3" fill="url(#footerLogoGrad)"/>
+                <rect x="14" y="42" width="12" height="2" rx="1" fill="#FFA733" opacity={0.7}/>
+                <rect x="40" y="14" width="20" height="59" rx="3" fill="url(#footerLogoGrad)"/>
+                <rect x="44" y="18" width="12" height="2" rx="1" fill="#FFA733" opacity={0.8}/>
+                <rect x="70" y="32" width="20" height="41" rx="3" fill="url(#footerLogoGrad)"/>
+                <rect x="74" y="36" width="12" height="2" rx="1" fill="#FFA733" opacity={0.7}/>
+              </svg>
               <span className="text-xl font-bold text-white amp-glow-text">
                 Amp<span className="text-[#FF8C00]">Spot</span>
               </span>
