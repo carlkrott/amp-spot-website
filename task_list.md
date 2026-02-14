@@ -1,103 +1,274 @@
-# WEBSITE DEVELOPMENT - PHASE 2: TASK LIST
-**Date:** 2026-02-14 00:58 GMT
-**Priority Order:** P0 (Critical) → P1 (High) → P2 (Medium) → P3 (Low)
+# PHASE 2: PLAN - Task List
+
+**Date:** 2026-02-14 04:00 GMT
+**Project:** Amp Spot Website (MacBook Workspace)
+**Current Version:** 0.1.4
 
 ---
 
-## 🔴 P0 - CRITICAL (Must Fix Before Production Build)
+## 📊 ASSESSMENT SUMMARY
 
-### [P0-1] Fix Unescaped Entities (6 errors)
-**Files Affected:**
-- `src/app/blog/page.tsx` (line 93)
-- `src/app/contact/page.tsx` (line 18)
-- `src/app/page.tsx` (lines 52, 80, 87 x 2)
+### Current State
+- **Code Quality:** ✅ TypeScript passes, ESLint passes
+- **Build Status:** ✅ Build cache exists (.next/)
+- **Git Status:** 🟡 9 commits ahead of origin/main, 4 modified files (documentation only)
+- **Project Health:** 🟢 Fully functional website with all core features
 
-**Issues:**
-- Unescaped apostrophes in JSX text
+### Project Features Implemented
+- ✅ Homepage with hero, newsletter signup, featured sections
+- ✅ Plugin pages (list + individual plugin detail pages)
+- ✅ Blog system with pages and cards
+- ✅ YouTube integration section
+- ✅ Pricing page
+- ✅ Login page
+- ✅ About, Contact, Privacy, Terms, Roadmap pages
+- ✅ Social media links
+- ✅ OpenGraph images for all plugins
+- ✅ SEO files (sitemap.xml)
+- ✅ Currency selector component
+- ✅ Audio visualizers (AnimatedMeterBridge, AudioBars)
+
+---
+
+## 🎯 TASK LIST (PRIORITIZED)
+
+### P0 - CRITICAL (Clean Workspace)
+
+#### Task 1: Commit or Clean Documentation Changes
+**Status:** 🔴 READY
+**Estimated Time:** 5 min
+
+**Issue:** 4 documentation files modified from previous session
+- `current_state.md` (256 lines changed)
+- `final_report.md` (374 lines changed)
+- `task_list.md` (355 lines changed)
+- `session_state.json` (untracked)
+
+**Action Options:**
+A. **Commit as-is:** Stage and commit documentation (recommended for history)
+B. **Reset to HEAD:** Discard changes (clean slate)
+C. **Stash changes:** Save for later reference
+
+**Recommendation:** Option A - Commit with descriptive message
+
+**Acceptance Criteria:**
+- Git working tree clean (no modified files)
+- Documentation preserved in git history
+
+---
+
+#### Task 2: Push Commits to Origin
+**Status:** ⏳ Depends on Task 1
+**Estimated Time:** 2 min
+
+**Issue:** 9 commits ahead of origin/main
 
 **Action:**
-1. Replace unescaped apostrophes with `&apos;` or `&rsquo;`
-2. Run `pnpm lint:fix` where possible
+```bash
+git push origin main
+```
+
+**Acceptance Criteria:**
+- origin/main synchronized with local HEAD
+- No pending commits
 
 ---
 
-## 🟡 P1 - HIGH (Quality Improvements)
+### P1 - HIGH (Quality & Testing)
 
-### [P1-1] Remove Unused ESLint Directives (2 warnings)
-**Files Affected:**
-- `coverage/block-navigation.js`
-- `src/components/AnimatedMeterBridge.tsx`
+#### Task 3: Clean Build and Verify
+**Status:** 🟢 READY
+**Estimated Time:** 5 min
+
+**Issue:** Build cache may be stale
 
 **Action:**
-1. Remove unused `eslint-disable` comments
-2. Verify warnings no longer apply
+```bash
+rm -rf .next
+pnpm build
+```
+
+**Acceptance Criteria:**
+- Build completes without errors
+- Production build ready in `.next/`
+- No warnings or critical errors
 
 ---
 
-## 🟢 P2 - MEDIUM (Verification)
+#### Task 4: Run Tests
+**Status:** ⏳ Depends on Task 3
+**Estimated Time:** 3 min
 
-### [P2-1] Verify SEO Files
-**Files to Check:**
-- `src/app/sitemap.ts` (should exist)
-- `public/robots.txt` (should exist)
+**Issue:** Test coverage exists, need verification
 
 **Action:**
-1. Verify sitemap.ts generates correct URLs
-2. Verify robots.txt references sitemap
-3. Test sitemap endpoint: `curl http://localhost:3000/sitemap.xml`
+```bash
+pnpm test:run
+pnpm test:coverage
+```
+
+**Acceptance Criteria:**
+- All tests pass
+- Coverage report generated
+- No failing tests
 
 ---
 
-### [P2-2] Verify Meta Tags on All Pages
+#### Task 5: Start Development Server and Verify
+**Status:** ⏳ Depends on Task 3
+**Estimated Time:** 5 min
+
 **Action:**
-1. Check dynamic metadata generation matches SEO specs
-2. Verify OpenGraph images exist
-3. Check description length (~160 chars)
+```bash
+pnpm dev --port 3001 &
+sleep 5
+curl -I http://localhost:3001
+# Test key pages
+curl -I http://localhost:3001/plugins
+curl -I http://localhost:3001/blog
+pkill -f "next dev"
+```
+
+**Acceptance Criteria:**
+- Dev server starts successfully
+- Homepage responds with 200
+- Key pages load correctly
 
 ---
 
-## 🔵 P3 - LOW (Future Enhancements)
+### P2 - MEDIUM (Enhancements)
 
-### [P3-1] Add OG Images
+#### Task 6: Check for TODO/FIXME Comments
+**Status:** 🟢 READY
+**Estimated Time:** 5 min
+
 **Action:**
-1. Create 5 PNG images (1200x630px)
-2. Save to `/public/images/og/`
-   - home.png
-   - eq.png
-   - compressor.png
-   - analyzer.png
-   - ms-processor.png
+```bash
+grep -r "TODO\|FIXME" src/ --include="*.ts" --include="*.tsx"
+```
+
+**Acceptance Criteria:**
+- List of all TODOs/FIXMEs documented
+- Prioritized for future work
 
 ---
 
-### [P3-2] Add Test Coverage
+#### Task 7: Review Package.json for Updates
+**Status:** 🟢 READY
+**Estimated Time:** 3 min
+
 **Action:**
-1. Check current test coverage with `pnpm test:coverage`
-2. Add tests for critical components
-3. Target: >70% coverage
+```bash
+pnpm outdated
+```
+
+**Acceptance Criteria:**
+- List of outdated packages documented
+- Security vulnerabilities checked (pnpm audit)
 
 ---
 
-### [P3-3] Check Bundle Size
+#### Task 8: Generate Changelog Entry
+**Status:** ⏳ Depends on Task 3
+**Estimated Time:** 5 min
+
 **Action:**
-1. Run `pnpm build` and measure bundle size
-2. Ensure <500KB initial JS bundle
-3. Identify any large dependencies to optimize
+- Review git log since last version (0.1.4)
+- Document changes in CHANGELOG.md
+- Prepare for next release (0.1.5 if needed)
+
+**Acceptance Criteria:**
+- CHANGELOG.md updated
+- Clear summary of changes since v0.1.4
 
 ---
 
-## 📋 Task Summary
+### P3 - LOW (Nice to Have)
 
-| Priority | Count | Estimated Time |
-|----------|-------|----------------|
-| P0 (Critical) | 1 | 10 min |
-| P1 (High) | 1 | 5 min |
-| P2 (Medium) | 2 | 15 min |
-| P3 (Low) | 3 | 90 min |
-| **Total** | **7** | **~2 hours** |
+#### Task 9: Bundle Size Analysis
+**Status:** 🟢 READY
+**Estimated Time:** 5 min
+
+**Action:**
+```bash
+du -sh .next/static
+du -sh node_modules
+```
+
+**Acceptance Criteria:**
+- Bundle sizes documented
+- Opportunities for optimization identified
 
 ---
 
-**Current Sprint Focus:** P0 tasks only (critical fixes before build)
+#### Task 10: Performance Audit (Lighthouse)
+**Status:** 🟢 READY (if dev server available)
+**Estimated Time:** 10 min
 
-**Next Phase:** PHASE 3: EDIT (Execute P0 tasks)
+**Action:**
+- Run Lighthouse CLI on dev server
+- Document scores (Performance, Accessibility, Best Practices, SEO)
+
+**Acceptance Criteria:**
+- Lighthouse report generated
+- Areas for improvement documented
+
+---
+
+## 🎯 SPRINT PLAN (This Session)
+
+**Time Budget:** ~30-45 minutes (cron job)
+**Target:** Complete P0 + P1 tasks (Tasks 1-5)
+
+**Execution Order:**
+1. Task 1: Commit documentation changes (5 min)
+2. Task 2: Push to origin (2 min)
+3. Task 3: Clean build (5 min)
+4. Task 4: Run tests (3 min)
+5. Task 5: Verify dev server (5 min)
+6. Task 6: Check TODOs (5 min)
+7. Task 7: Check outdated packages (3 min)
+8. Task 8: Update changelog (5 min)
+
+**Total Estimated:** ~33 minutes
+
+**Fallout to P2/P3 if time permits.**
+
+---
+
+## 📊 PROJECT HEALTH METRICS
+
+### Current Status
+- **TypeScript:** ✅ Passing
+- **ESLint:** ✅ Passing
+- **Build:** 🟡 Stale (needs rebuild)
+- **Tests:** 🟡 Need verification
+- **Git:** 🟡 Ahead by 9 commits
+- **Documentation:** 🟡 Modified files pending
+
+### Code Quality Indicators
+- **React Hooks:** ✅ Purity issues fixed (commit c92c960)
+- **OpenGraph:** ✅ All plugins + homepage (commit ae68d06)
+- **SEO:** ✅ Sitemap and meta tags (commit b060a13)
+- **Lint Errors:** ✅ All P0/P1 fixed (commit cc49ffd)
+
+---
+
+## 🔄 SUCCESS CRITERIA
+
+**Session Success If:**
+- ✅ Git working tree clean
+- ✅ Commits pushed to origin
+- ✅ Build completes successfully
+- ✅ All tests pass
+- ✅ Dev server verified
+- ✅ TODOs documented
+
+**Session Complete If:**
+- All P0 tasks complete (Tasks 1-2)
+- All P1 tasks complete (Tasks 3-5)
+- At least 1 P2 task complete (Tasks 6-8)
+
+---
+
+*Plan generated: 2026-02-14 04:00 GMT*
