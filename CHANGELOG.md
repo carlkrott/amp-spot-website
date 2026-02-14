@@ -5,6 +5,12 @@ All notable changes to the Amp Spot website will be documented in this file.
 ## [Unreleased] - 2026-02-14
 
 ### Fixed
+- **React Hooks Lint Errors**
+  - Fixed impure `Date.now()` call in AnimatedMeterBridge initialization
+  - Moved start time initialization to `useEffect` hook
+  - Added proper eslint-disable comment for animation loop recursion pattern
+  - Updated comment to target `react-hooks/immutability` rule
+
 - **P0 - Unescaped entities in JSX (CRITICAL)**
   - Fixed 6 unescaped apostrophe errors using `&apos;` entity
   - `src/app/blog/page.tsx` - Line 93 (We're)

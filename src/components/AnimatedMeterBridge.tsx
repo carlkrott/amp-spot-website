@@ -24,7 +24,14 @@ export function AnimatedMeterBridge() {
 
   const animationRef = useRef<number | undefined>(undefined);
   const lastUpdateRef = useRef<number>(0);
-  const startTimeRef = useRef<number>(Date.now());
+  const startTimeRef = useRef<number>(0);
+
+  // Initialize start time on mount (impure Date.now() call)
+  useEffect(() => {
+    if (startTimeRef.current === 0) {
+      startTimeRef.current = Date.now();
+    }
+  }, []);
 
   // Generate smooth random target levels
   const updateTargetLevels = useCallback(() => {
@@ -91,7 +98,7 @@ export function AnimatedMeterBridge() {
       };
     }));
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- animate is passed to itself for animation loop
+    // eslint-disable-next-line react-hooks/immutability -- Animation loop: animate calls itself via requestAnimationFrame (valid recursion pattern)
     animationRef.current = requestAnimationFrame(animate);
   }, []);
 
