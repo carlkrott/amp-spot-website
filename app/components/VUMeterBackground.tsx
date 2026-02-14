@@ -40,12 +40,6 @@ export default function VUMeterBackground() {
     return () => clearInterval(interval);
   }, []);
 
-  const getBarColor = (level: number): string => {
-    if (level < 60) return 'rgba(255, 140, 0, 0.15)'; // Low - orange
-    if (level < 80) return 'rgba(255, 167, 51, 0.25)'; // Medium - lighter orange
-    return 'rgba(255, 140, 0, 0.35)'; // High - orange glow
-  };
-
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <div className="flex items-end justify-between h-full gap-2 opacity-30">
