@@ -1,12 +1,26 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import redis from '@/lib/redis';
+import { z } from 'zod';
+import { validateRequest } from '@/lib/validations';
 
 interface RecentDownload {
   plugin_name: string;
   download_count: number;
   last_download: string;
 }
+
+// Dashboard POST validation schema
+const DashboardPostSchema = z.object({
+  user_id: z.string().min(1, 'User ID is required').max(100, 'User ID too long'),
+  action: z.enum(['add_favorite', 'remove_favorite', 'increment_downloads']),
+  plugin_id: z.string().max(100).optional(),
+});
+
+// Dashboard GET validation schema
+const DashboardQuerySchema = z.object({
+  user_id: z.string().max(100).optional(),
+});
 
 export interface DashboardStats {
   total_downloads: number;
@@ -23,7 +37,22 @@ export interface DashboardStats {
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('user_id');
+    
+    // Validate query parameters
+    const queryParams: Record<string, string> = {};
+    searchParams.forEach((value, key) => {
+      queryParams[key] = value;
+    });
+    
+    const validation = validateRequest(DashboardQuerySchema, queryParams);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+
+    const userId = validation.data.user_id || null;
 
     // Get total plugins count
     const pluginsResult = await query('SELECT COUNT(*) as count FROM plugins');
@@ -86,14 +115,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { user_id, action, plugin_id } = body;
-
-    if (!user_id || !action) {
+    
+    // Validate request body
+    const validation = validateRequest(DashboardPostSchema, body);
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'User ID and action are required' },
+        { error: validation.error },
         { status: 400 }
       );
     }
+
+    const { user_id, action, plugin_id } = validation.data;
 
     const userStatsKey = `user:${user_id}:stats`;
     
@@ -126,11 +158,6 @@ export async function POST(request: Request) {
       case 'increment_downloads':
         userStats.downloads_count += 1;
         break;
-      default:
-        return NextResponse.json(
-          { error: 'Invalid action' },
-          { status: 400 }
-        );
     }
 
     // Save updated stats (cache for 24 hours)

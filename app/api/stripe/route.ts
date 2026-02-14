@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import redis from '@/lib/redis';
+import { z } from 'zod';
+import { validateRequest } from '@/lib/validations';
 
 // This is a basic Stripe integration scaffold
 // In production, you would:
@@ -59,13 +61,41 @@ const PRICING_PLANS: PricingPlan[] = [
   },
 ];
 
+// Stripe checkout validation schema
+const StripeCheckoutSchema = z.object({
+  plan_id: z.string().min(1, 'Plan ID is required').refine(val => ['free', 'pro', 'studio'].includes(val), {
+    message: 'Invalid plan_id. Must be: free, pro, or studio',
+  }),
+  user_email: z.string().email('Invalid email address').min(1, 'User email is required'),
+  user_id: z.string().max(100).optional(),
+  success_url: z.string().url('Invalid success URL').optional(),
+  cancel_url: z.string().url('Invalid cancel URL').optional(),
+});
+
+// Stripe payment verification schema
+const StripeVerifySchema = z.object({
+  session_id: z.string().min(1, 'Session ID is required').max(255),
+});
+
 // GET /api/stripe - Get pricing plans
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const planId = searchParams.get('plan_id');
 
+    // Validate plan_id if provided
     if (planId) {
+      const planValidation = z.string().refine(val => ['free', 'pro', 'studio'].includes(val), {
+        message: 'Invalid plan_id. Must be: free, pro, or studio',
+      }).safeParse(planId);
+      
+      if (!planValidation.success) {
+        return NextResponse.json(
+          { error: planValidation.error.issues[0].message },
+          { status: 400 }
+        );
+      }
+
       const plan = PRICING_PLANS.find(p => p.id === planId);
       if (!plan) {
         return NextResponse.json(
@@ -92,14 +122,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { plan_id, user_email, user_id, success_url, cancel_url } = body;
-
-    if (!plan_id || !user_email) {
+    
+    // Validate request body
+    const validation = validateRequest(StripeCheckoutSchema, body);
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Plan ID and user email are required' },
+        { error: validation.error },
         { status: 400 }
       );
     }
+
+    const { plan_id, user_email, user_id, success_url, cancel_url } = validation.data;
 
     const plan = PRICING_PLANS.find(p => p.id === plan_id);
     if (!plan) {
@@ -193,14 +226,17 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { session_id } = body;
-
-    if (!session_id) {
+    
+    // Validate request body
+    const validation = validateRequest(StripeVerifySchema, body);
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Session ID is required' },
+        { error: validation.error },
         { status: 400 }
       );
     }
+
+    const { session_id } = validation.data;
 
     // Get checkout data from Redis
     const checkoutData = await redis.get(`checkout:${session_id}`);

@@ -4,6 +4,20 @@ All notable changes to the Amp Spot website will be documented in this file.
 
 ## [Unreleased]
 
+### Added - 2026-02-14 (Sprint 3)
+- Input validation completion (100% API coverage)
+  - `/api/dashboard/route.ts` - GET and POST validation
+  - `/api/stripe/route.ts` - GET, POST, PUT validation
+  - `/api/plugins/[id]/download/route.ts` - POST validation
+- Toast notifications
+  - Installed `react-hot-toast` v2.6.0
+  - Added `Toaster` component to `app/layout.tsx`
+  - Replaced `alert()` calls with toast notifications in `PluginList.tsx`
+  - Toast styled with Amp Spot brand colors (orange)
+
+### Dependencies - 2026-02-14 (Sprint 3)
+- Added `react-hot-toast` v2.6.0
+
 ### Added - 2026-02-14 (Sprint 2)
 - Social sharing metadata
   - OpenGraph tags in `app/layout.tsx`

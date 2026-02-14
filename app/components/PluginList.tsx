@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import PluginCard, { PluginData } from './PluginCard';
+import toast from 'react-hot-toast';
 
 interface PluginListProps {
   initialCategory?: string;
@@ -73,8 +74,10 @@ export default function PluginList({ initialCategory }: PluginListProps) {
       // Trigger browser download by opening the download URL
       window.open(data.plugin.download_url, '_blank');
 
-      // Optional: Show success message (TODO: Replace with toast notification)
-      // For now, we'll just set a timeout to clear the downloading state
+      // Show success toast
+      toast.success(`Downloading ${plugin.name} v${plugin.version}...`);
+
+      // Clear downloading state after a short delay
       setTimeout(() => {
         setDownloading(prev => ({ ...prev, [plugin.id]: false }));
       }, 2000);
@@ -82,7 +85,7 @@ export default function PluginList({ initialCategory }: PluginListProps) {
     } catch (err) {
       console.error('Download error:', err);
       setDownloading(prev => ({ ...prev, [plugin.id]: false }));
-      alert('Download failed. Please try again.');
+      toast.error('Download failed. Please try again.');
     }
   }
 

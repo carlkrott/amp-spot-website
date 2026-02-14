@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import redis from '@/lib/redis';
+import { validateRequest, DownloadLogSchema } from '@/lib/validations';
 
 // GET /api/plugins/[id]/download - Download a plugin
 export async function GET(
@@ -92,7 +93,21 @@ export async function POST(
     }
 
     const body = await request.json();
-    const { user_id, platform, version } = body;
+    
+    // Validate request body
+    const validation = validateRequest(DownloadLogSchema, {
+      ...body,
+      plugin_id: id, // Add plugin_id from route param
+    });
+    
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+
+    const { user_id, platform, version } = validation.data;
 
     // Log download with user context
     const downloadLog = {

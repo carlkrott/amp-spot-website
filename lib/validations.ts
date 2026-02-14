@@ -49,6 +49,14 @@ export const SessionCreateSchema = z.object({
   platform: z.enum(['macos', 'windows', 'linux']),
 });
 
+// Download logging validation schema
+export const DownloadLogSchema = z.object({
+  plugin_id: z.number().int().positive('Valid plugin ID required'),
+  user_id: z.string().max(100).optional().default('anonymous'),
+  platform: z.enum(['macos', 'windows', 'linux']).optional(),
+  version: z.string().max(20).optional(),
+});
+
 // Stripe validation schemas
 export const StripeCheckoutSchema = z.object({
   plugin_id: z.number().int().positive('Valid plugin ID required'),
