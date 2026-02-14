@@ -1,61 +1,86 @@
 # Changelog
 
-## [0.1.5] - 2026-02-14 (Unreleased)
+All notable changes to this project will be documented in this file.
 
-### Development
-- Session documentation added (current_state.md, task_list.md, final_report.md)
-- Session tracking implemented (session_state.json)
-- Git repository synchronized with origin/main
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Infrastructure
-- Build system validated: clean build successful
-- Test suite verified: 13/13 tests passing (48.31% coverage)
-- Development server verified: all key pages load correctly
-- Package audit: No security vulnerabilities found
-
----
-
-## [0.1.4] - 2026-02-14
-
-### Fixed
-- Replaced inline `Math.random()` implementations with proper `AudioBars` component
-- Fixed all React purity violations (14 occurrences across 5 pages)
-- All lint errors resolved (46 → 0)
-
-### Changed
-- Blog page now uses AudioBars component for VU meter aesthetic
-- Homepage AudioBars properly configured for consistent visual design
-- Pricing page AudioBars updated for performance
-- Social page AudioBars optimized
-- YouTube page AudioBars improved
-
----
-
-## [0.1.3] - 2026-02-13
+## [0.1.5] - 2026-02-14
 
 ### Added
-- YouTube content page
-- Pricing page with currency support
-- Social links page
-- Contact page
-- Privacy policy page
-- Terms of service page
-- Roadmap page
-
-### Fixed
-- Issue 5: Blog system enhancement
-- Issues 1-4: Header, Footer, Currency, Social Media
+- Download API endpoint for plugin distribution (`/api/plugins/[slug]/download`)
+- Global error boundary (`src/app/error.tsx`) with custom error UI
+- Custom 404 not found page (`src/app/not-found.tsx`) with helpful navigation
+- macOS VST3 bundle downloads (tar.gz format) for all 4 plugins
 
 ### Changed
-- Database connection to use Supabase (DATABASE_URL)
-- Redis configuration for 7995x integration
+- Updated sitemap to include new plugin download routes
+- Improved error handling throughout the application
 
----
+### Fixed
+- Critical issue: Missing download files in `public/downloads/` directory
+- Download route now serves actual VST3 bundles instead of placeholders
 
-## [0.1.0] - 2026-02-11
+### Technical
+- Bundle sizes:
+  - amp-spot-analyzer-macos.tar.gz: 3.2 MB
+  - amp-spot-comp-macos.tar.gz: 3.9 MB
+  - amp-spot-eq-macos.tar.gz: 4.3 MB
+  - amp-spot-ms-macos.tar.gz: 3.4 MB
+- Total download size: ~15 MB
+
+## [0.1.4] - 2026-02-13
+
+### Added
+- Blog section with dynamic routes
+- Pricing page with currency selector
+- Contact page
+- Login page (UI only)
+- Roadmap page
+- Privacy policy and terms of service pages
+- Social links page
+
+### Changed
+- Updated Header component with blog and pricing links
+- Enhanced Footer with additional links
+
+## [0.1.3] - 2026-02-12
+
+### Added
+- Plugin detail pages with dynamic routing
+- Plugin grid with search and filtering
+- Individual plugin API routes
+- Download tracking API
+
+### Fixed
+- TypeScript linting errors in dashboard API route
+
+## [0.1.2] - 2026-02-11
+
+### Added
+- Dashboard page with user statistics
+- Session management API
+- Stripe integration (mock)
+
+### Changed
+- Updated Header with login button
+- Improved routing structure
+
+## [0.1.1] - 2026-02-10
+
+### Added
+- Plugins listing page
+- Plugin search functionality
+- Plugin category filtering
+
+## [0.1.0] - 2026-02-09
 
 ### Initial Release
-- Next.js 16.1.6 website
-- Plugin showcase pages
-- Blog system
-- Basic layout with Header/Footer
+- Homepage with hero section
+- About page
+- Documentation landing page
+- Basic API structure
+- PostgreSQL database connection
+- Redis caching layer
+- Glassmorphism design system
+- Responsive layout
