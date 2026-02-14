@@ -5,6 +5,12 @@ All notable changes to the Amp Spot website will be documented in this file.
 ## [Unreleased] - 2026-02-14
 
 ### Fixed
+- **P0 - Unescaped entities in JSX (CRITICAL)**
+  - Fixed 6 unescaped apostrophe errors using `&apos;` entity
+  - `src/app/blog/page.tsx` - Line 93 (We're)
+  - `src/app/contact/page.tsx` - Line 18 (We're)
+  - `src/app/page.tsx` - Lines 52, 80, 87 x 2 (won't, We're, shouldn't, you're)
+
 - **P1 - Unescaped entities in JSX**
   - Fixed 6 unescaped quote errors in `src/app/privacy/page.tsx`
   - Fixed 2 unescaped quote errors in `src/app/terms/page.tsx`

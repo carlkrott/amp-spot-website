@@ -49,7 +49,7 @@ export default function HomePage() {
               Plugins That <span className="text-orange-200">Punch Above Their Weight</span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-orange-100 sm:text-xl">
-              Pro-quality audio tools that won't make your wallet cry. From EQ and compression to saturation and analysis, get studio-quality tools without the studio price tag.
+              Pro-quality audio tools that won&apos;t make your wallet cry. From EQ and compression to saturation and analysis, get studio-quality tools without the studio price tag.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-x-6">
               <Link
@@ -77,14 +77,14 @@ export default function HomePage() {
               What is Amp Spot?
             </h2>
             <p className="mt-4 text-lg text-gray-400">
-              We're a team of passionate audio engineers and producers building tools we actually want to use.
+              We&apos;re a team of passionate audio engineers and producers building tools we actually want to use.
             </p>
           </div>
 
           <div className="grid gap-12 lg:grid-cols-2">
             <div className="space-y-6">
               <p className="text-lg text-gray-300 leading-relaxed">
-                Amp Spot was born from a simple frustration: great sounding plugins shouldn't cost a fortune. We believe every producer deserves access to professional-quality tools, whether you're working in a bedroom studio or a world-class facility.
+                Amp Spot was born from a simple frustration: great sounding plugins shouldn&apos;t cost a fortune. We believe every producer deserves access to professional-quality tools, whether you&apos;re working in a bedroom studio or a world-class facility.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
                 Our plugins are designed with one goal in mind: help you make better music, faster. No complicated workflows, no endless tweaking—just great sound that gets out of your way and lets you be creative.

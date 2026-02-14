@@ -90,7 +90,7 @@ export default function BlogPage() {
             More Content Coming Soon
           </h2>
           <p className="mt-4 text-lg text-orange-100">
-            We\'re working on bringing you the best production tips and tutorials. Stay tuned!
+            We&apos;re working on bringing you the best production tips and tutorials. Stay tuned!
           </p>
         </div>
       </section>
