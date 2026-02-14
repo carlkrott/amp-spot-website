@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.5] - 2026-02-14 (Unreleased)
+
+### Development
+- Session documentation added (current_state.md, task_list.md, final_report.md)
+- Session tracking implemented (session_state.json)
+- Git repository synchronized with origin/main
+
+### Infrastructure
+- Build system validated: clean build successful
+- Test suite verified: 13/13 tests passing (48.31% coverage)
+- Development server verified: all key pages load correctly
+- Package audit: No security vulnerabilities found
+
+---
+
 ## [0.1.4] - 2026-02-14
 
 ### Fixed
