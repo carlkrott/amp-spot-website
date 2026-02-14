@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-02-14
+
+### Changed
+- Upgraded React from 19.2.3 to 19.2.4 (patch update)
+- Upgraded @types/node from 20.19.33 to 25.2.3 (minor update)
+- Improved type safety with latest Node.js type definitions
+
+### Fixed
+- Maintained 100% test pass rate after dependency updates
+- No breaking changes introduced
+
+### Technical
+- All 13 tests passing
+- No lint errors or warnings
+- TypeScript type-check passes
+- Dependencies updated via pnpm
+
 ## [0.1.5] - 2026-02-14
 
 ### Added
