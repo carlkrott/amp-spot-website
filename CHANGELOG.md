@@ -27,6 +27,15 @@ All notable changes to the Amp Spot website will be documented in this file.
     - Allows all crawlers
     - Includes sitemap reference
 
+- **OpenGraph Images for Social Media**
+  - `public/images/og/home.png` (1200x630) - Main homepage OG image
+  - `public/images/og/eq.png` (1200x630) - EQ plugin OG image
+  - `public/images/og/compressor.png` (1200x630) - Compressor plugin OG image
+  - `public/images/og/analyzer.png` (1200x630) - Analyzer plugin OG image
+  - `public/images/og/ms-processor.png` (1200x630) - Mid/Side processor OG image
+  - All images use Amp Spot branding (orange #FF8C00, glassmorphism aesthetic)
+  - SVG source files also included for easy editing
+
 - **P1 - Developer Experience**
   - `type-check` script in package.json
   - `lint:fix` script in package.json

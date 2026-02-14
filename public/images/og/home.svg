@@ -1,0 +1,129 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f23;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Orange Glow Gradient -->
+    <radialGradient id="orangeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FF8C00;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:0" />
+    </radialGradient>
+
+    <!-- Glassmorphism Effect -->
+    <filter id="glass" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur" />
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur" />
+      <feFlood flood-color="#000000" flood-opacity="0.3" result="offsetColor" />
+      <feComposite in="offsetColor" in2="offsetBlur" operator="in" result="offsetBlur" />
+      <feMerge>
+        <feMergeNode in="offsetBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- VU Meter Gradient -->
+    <linearGradient id="vuGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#eab308;stop-opacity:1" />
+      <stop offset="90%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)" />
+
+  <!-- Orange Glow Background -->
+  <circle cx="600" cy="315" r="350" fill="url(#orangeGlow)" />
+
+  <!-- Grid Pattern (Subtle) -->
+  <g opacity="0.05">
+    <line x1="0" y1="100" x2="1200" y2="100" stroke="#FF8C00" stroke-width="1" />
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#FF8C00" stroke-width="1" />
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#FF8C00" stroke-width="1" />
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#FF8C00" stroke-width="1" />
+    <line x1="0" y1="500" x2="1200" y2="500" stroke="#FF8C00" stroke-width="1" />
+    <line x1="100" y1="0" x2="100" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="200" y1="0" x2="200" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="400" y1="0" x2="400" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="500" y1="0" x2="500" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="700" y1="0" x2="700" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="800" y1="0" x2="800" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="1000" y1="0" x2="1000" y2="630" stroke="#FF8C00" stroke-width="1" />
+    <line x1="1100" y1="0" x2="1100" y2="630" stroke="#FF8C00" stroke-width="1" />
+  </g>
+
+  <!-- Decorative Audio Wave -->
+  <g opacity="0.1">
+    <path d="M100 400 Q150 300 200 400 T300 400 T400 400 T500 400 T600 350 T700 400 T800 400 T900 400 T1000 400 T1100 400"
+          stroke="#FF8C00" stroke-width="3" fill="none" />
+    <path d="M100 420 Q150 380 200 420 T300 420 T400 420 T500 420 T600 380 T700 420 T800 420 T900 420 T1000 420 T1100 420"
+          stroke="#FF8C00" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Logo/Brand -->
+  <g filter="url(#glass)">
+    <!-- VU Meter Icon -->
+    <rect x="480" y="130" width="240" height="140" rx="20" fill="rgba(26, 26, 46, 0.7)" stroke="#FF8C00" stroke-width="2" />
+
+    <!-- VU Meter Needle -->
+    <line x1="600" y1="200" x2="600" y2="90" stroke="#FF8C00" stroke-width="3" stroke-linecap="round" />
+    <circle cx="600" cy="200" r="8" fill="#FF8C00" />
+
+    <!-- VU Scale -->
+    <path d="M500 100 Q600 60 700 100" stroke="url(#vuGradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8" />
+
+    <!-- dB Markings -->
+    <text x="500" y="85" font-family="Arial, sans-serif" font-size="12" fill="#fff" text-anchor="middle">0</text>
+    <text x="600" y="55" font-family="Arial, sans-serif" font-size="12" fill="#fff" text-anchor="middle">+6</text>
+    <text x="700" y="85" font-family="Arial, sans-serif" font-size="12" fill="#fff" text-anchor="middle">-20</text>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#FF8C00" text-anchor="middle" filter="url(#glass)">
+    AMP SPOT
+  </text>
+
+  <text x="600" y="390" font-family="Arial, sans-serif" font-size="28" fill="#ffffff" text-anchor="middle" opacity="0.9">
+    Professional Audio Plugins
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="430" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle" opacity="0.6">
+    Warm Sound. Modern Workflow.
+  </text>
+
+  <!-- Feature Badges -->
+  <g transform="translate(350, 480)">
+    <rect x="0" y="0" width="120" height="40" rx="20" fill="rgba(255, 140, 0, 0.2)" stroke="#FF8C00" stroke-width="1.5" />
+    <text x="60" y="27" font-family="Arial, sans-serif" font-size="14" fill="#FF8C00" text-anchor="middle" font-weight="bold">VST3 + CLAP</text>
+  </g>
+
+  <g transform="translate(490, 480)">
+    <rect x="0" y="0" width="100" height="40" rx="20" fill="rgba(255, 140, 0, 0.2)" stroke="#FF8C00" stroke-width="1.5" />
+    <text x="50" y="27" font-family="Arial, sans-serif" font-size="14" fill="#FF8C00" text-anchor="middle" font-weight="bold">VIZIA UI</text>
+  </g>
+
+  <g transform="translate(610, 480)">
+    <rect x="0" y="0" width="100" height="40" rx="20" fill="rgba(255, 140, 0, 0.2)" stroke="#FF8C00" stroke-width="1.5" />
+    <text x="50" y="27" font-family="Arial, sans-serif" font-size="14" fill="#FF8C00" text-anchor="middle" font-weight="bold">GLASSMORPHISM</text>
+  </g>
+
+  <g transform="translate(730, 480)">
+    <rect x="0" y="0" width="120" height="40" rx="20" fill="rgba(255, 140, 0, 0.2)" stroke="#FF8C00" stroke-width="1.5" />
+    <text x="60" y="27" font-family="Arial, sans-serif" font-size="14" fill="#FF8C00" text-anchor="middle" font-weight="bold">VU METERS</text>
+  </g>
+
+  <!-- Bottom Accent Line -->
+  <line x1="300" y1="560" x2="900" y2="560" stroke="#FF8C00" stroke-width="2" opacity="0.5" />
+
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.5">
+    amp-spot.audio
+  </text>
+</svg>
