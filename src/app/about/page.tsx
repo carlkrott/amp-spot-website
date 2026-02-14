@@ -29,7 +29,7 @@ export default function AboutPage() {
               for bedroom producers, students, and hobbyists.
             </p>
             <p className="text-gray-300 leading-relaxed mt-4">
-              We believed there had to be a middle ground. Professional quality shouldn't require a 
+              We believed there had to be a middle ground. Professional quality shouldn&apos;t require a
               professional budget.
             </p>
           </div>
@@ -40,8 +40,8 @@ export default function AboutPage() {
               <li className="flex items-start gap-3">
                 <span className="text-orange-500 text-xl">•</span>
                 <div>
-                  <strong className="text-white">Transparency:</strong> No hidden processing, no proprietary 
-                  "magic" algorithms. Clean audio path, every time.
+                  <strong className="text-white">Transparency:</strong> No hidden processing, no proprietary
+                  &quot;magic&quot; algorithms. Clean audio path, every time.
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -54,8 +54,8 @@ export default function AboutPage() {
               <li className="flex items-start gap-3">
                 <span className="text-orange-500 text-xl">•</span>
                 <div>
-                  <strong className="text-white">Education:</strong> Great tools are only valuable if you 
-                  know how to use them. We're committed to teaching, not just selling.
+                  <strong className="text-white">Education:</strong> Great tools are only valuable if you
+                  know how to use them. We&apos;re committed to teaching, not just selling.
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -71,8 +71,8 @@ export default function AboutPage() {
           <div className="rounded-2xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 p-8 mb-8">
             <h2 className="text-2xl font-bold text-white mb-4">The Team</h2>
             <p className="text-gray-300 leading-relaxed">
-              Amp Spot is built by audio engineers, producers, and developers who love music and technology. 
-              We've spent years in studios, bedrooms, and basements making music—and we've felt the pain 
+              Amp Spot is built by audio engineers, producers, and developers who love music and technology.
+              We&apos;ve spent years in studios, bedrooms, and basements making music—and we&apos;ve felt the pain
               of expensive software holding back creativity.
             </p>
             <p className="text-gray-300 leading-relaxed mt-4">
@@ -84,7 +84,7 @@ export default function AboutPage() {
           <div className="rounded-2xl bg-gradient-to-br from-orange-500/10 to-purple-600/10 border border-orange-500/20 p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-4">Join Our Community</h2>
             <p className="text-gray-300 mb-6">
-              We're building more than plugins—we're building a community of creators who believe great 
+              We&apos;re building more than plugins—we&apos;re building a community of creators who believe great
               tools should be accessible to all.
             </p>
             <div className="flex flex-wrap justify-center gap-4">

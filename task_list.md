@@ -1,208 +1,147 @@
-# Website Development Task List
-**Generated:** 2026-02-13 22:35 GMT
-**Priority:** High → Low
-**Total Tasks:** 20
+# WEBSITE DEVELOPMENT - PHASE 2: TASK LIST
+**Date:** 2026-02-13 23:30 GMT
+**Priority Order:** P0 (Critical) → P1 (High) → P2 (Medium) → P3 (Low)
 
 ---
 
-## P0 - CRITICAL (Blockers for Build)
+## 🔴 P0 - CRITICAL (Must Fix Before Build)
 
-### 1. Fix Math.random() impure function errors (16 instances)
-**Files:**
-- `src/app/page.tsx` (3 instances - lines 49, 50, 200, 201)
-- `src/app/blog/page.tsx` (2 instances - lines 25, 26)
-- `src/app/pricing/page.tsx` (4 instances - lines 106, 107, 264, 265)
-- `src/app/social/page.tsx` (4 instances - lines 129, 130, 329, 330)
-- `src/app/youtube/page.tsx` (4 instances - lines 48, 49, 249, 250)
+### [P0-1] Fix ESLint Errors
+**File:** `src/app/about/page.tsx`
+**Issues:**
+- Line 32: Unescaped apostrophe
+- Line 44: Unescaped quotes
+- Line 58, 75, 87: Unescaped apostrophes
 
-**Solution:** Move Math.random() to a useMemo hook with a seeded array, or use CSS animations instead
-
-**Impact:** Blocks production build
-
----
-
-### 2. Fix React Hook: updatePrices accessed before declaration
-**File:** `src/app/pricing/page.tsx` (line 73)
-**Error:** `updatePrices` is accessed before it is declared
-**Solution:** Move `updatePrices` function before `useEffect`, or use useCallback
-**Impact:** Runtime error in pricing page
+**Action:**
+1. Replace unescaped quotes with `&quot;` or `&ldquo;`/`&rdquo;`
+2. Replace unescaped apostrophes with `&apos;` or `&rsquo;` or `&#39;`
 
 ---
 
-### 3. Fix AnimatedMeterBridge Date.now() impure error
-**File:** `src/components/AnimatedMeterBridge.tsx` (line 55)
-**Error:** `Date.now()` is an impure function
-**Solution:** Move Date.now() inside requestAnimationFrame callback (it's already there, just suppress warning)
-**Impact:** Animation may not work correctly
+### [P0-2] Fix React Purity Warning
+**File:** `src/app/blog/page.tsx`
+**Issues:**
+- Lines 25-26: `Math.random()` called during render (impure function)
+- Causes unstable results when component re-renders
+
+**Action:**
+1. Move `Math.random()` to useMemo or outside render
+2. Or use CSS animations instead of inline random styles
 
 ---
 
-## P1 - HIGH (Code Quality)
+## 🟡 P1 - HIGH (Important for Quality)
 
-### 4. Fix unescaped entities (13 instances)
-**Files:**
-- `src/app/about/page.tsx` (6 instances - quotes in text)
-- `src/app/blog/page.tsx` (1 instance - line 103)
-- `src/app/contact/page.tsx` (1 instance - line 18)
-- `src/app/page.tsx` (4 instances - lines 63, 91, 98)
-- `src/app/pricing/page.tsx` (1 instance - line 120)
-- `src/app/privacy/page.tsx` (6 instances - quotes)
-- `src/app/social/page.tsx` (0 instances)
-- `src/app/terms/page.tsx` (2 instances - line 91)
-- `src/app/youtube/page.tsx` (2 instances - line 194)
+### [P1-1] Add type-check Script
+**File:** `package.json`
+**Issue:** Missing `type-check` script for TypeScript validation
 
-**Solution:** Use `{`'`}` or HTML entities (`&apos;`, `&quot;`)
-**Impact:** ESLint errors, possible XSS risk
+**Action:**
+Add script to package.json:
+```json
+"type-check": "tsc --noEmit"
+```
 
 ---
 
-### 5. Fix setState in effect warning
-**File:** `src/components/CurrencySelector.tsx` (line 19)
-**Warning:** Calling setState synchronously within an effect
-**Solution:** Initialize state with derived value instead of setting in effect
-**Impact:** Potential cascading renders, performance hit
+### [P1-2] Verify Meta Tags on Plugin Pages
+**Files:** `src/app/plugins/[slug]/page.tsx`
+**Action:**
+1. Ensure dynamic metadata generation matches SEO specs
+2. Verify OpenGraph images are present
+3. Check description length (~160 chars)
 
 ---
 
-### 6. Fix useEffect missing dependency
-**File:** `src/components/AnimatedMeterBridge.tsx` (line 112)
-**Warning:** Missing dependency: 'animate'
-**Solution:** Either include animate in deps or use useCallback for animate
-**Impact:** Potential stale closure bugs
+### [P1-3] Add sitemap.xml Generation
+**Action:**
+1. Create `src/app/sitemap.ts` file
+2. Generate sitemap with all pages and plugin URLs
+3. Include lastModified dates
 
 ---
 
-## P2 - MEDIUM (Cleanup)
-
-### 7. Remove unused import: Link
-**File:** `src/app/youtube/page.tsx` (line 1)
-**Issue:** 'Link' is defined but never used
-**Solution:** Remove the import
-
----
-
-### 8. Remove unused variable: delta
-**File:** `src/components/AnimatedMeterBridge.tsx` (line 56)
-**Issue:** 'delta' is assigned a value but never used
-**Solution:** Remove the variable or implement its usage
+### [P1-4] Add robots.txt
+**Action:**
+1. Create `public/robots.txt` file
+2. Allow all crawlers
+3. Add sitemap reference
 
 ---
 
-### 9. Remove unused import: BlogPostPreview
-**File:** `src/lib/blog.ts` (line 1)
-**Issue:** 'BlogPostPreview' is defined but never used
-**Solution:** Remove the import
+## 🟢 P2 - MEDIUM (Nice to Have)
+
+### [P2-1] Add Test Coverage
+**Action:**
+1. Check current test coverage with `pnpm test:coverage`
+2. Add tests for critical components (Header, PluginCard)
+3. Target: >70% coverage
 
 ---
 
-## P3 - LOW (Enhancements)
-
-### 10. Add missing .env file
-**File:** Create `.env` from `.env.example`
-**Status:** Only .env.example exists
-**Solution:** Copy .env.example to .env with real values
-**Impact:** Required for local development
+### [P2-2] Verify Environment Variables
+**Action:**
+1. Check all `.env.local` values are set
+2. Add validation for required env vars
+3. Document expected environment variables in README
 
 ---
 
-### 11. Improve Next.js config
-**File:** `next.config.ts`
-**Current:** Empty config
-**Suggestions:**
-  - Image optimization settings
-  - Compression enabled
-  - SWC minification
-  - Bundle analyzer (dev only)
+### [P2-3] Check Bundle Size
+**Action:**
+1. Run `pnpm build` and measure bundle size
+2. Ensure <500KB initial JS bundle
+3. Identify any large dependencies to optimize
 
 ---
 
-### 12. Add more test coverage
-**Current:** Only 1 test file (`plugins.test.ts`)
-**Target:** Test components (Header, Footer, Hero, cards)
-**Impact:** Improve code confidence
+### [P2-4] Optimize Images
+**Action:**
+1. Check public/images for unoptimized assets
+2. Use Next.js Image component for all images
+3. Ensure WebP/AVIF formats used
 
 ---
 
-### 13. Add pre-commit hooks
-**Tool:** husky + lint-staged
-**Scripts:** Run lint, type-check, tests before commit
-**Impact:** Prevent bad commits
+## 🔵 P3 - LOW (Future Enhancements)
+
+### [P3-1] Add Accessibility Improvements
+**Action:**
+1. Run axe-core linter
+2. Fix any a11y issues
+3. Add ARIA labels where needed
 
 ---
 
-### 14. Set up CI/CD pipeline
-**Platform:** GitHub Actions or Vercel
-**Stages:** lint, test, build, deploy
-**Impact:** Automated quality checks
+### [P3-2] Add Performance Monitoring
+**Action:**
+1. Set up Lighthouse CI
+2. Add performance budget tracking
+3. Monitor Core Web Vitals
 
 ---
 
-## P4 - FUTURE (Nice-to-have)
-
-### 15. Add TypeScript strict mode
-**File:** `tsconfig.json`
-**Change:** `"strict": true`
-**Impact:** Catch more bugs at compile time
-
----
-
-### 16. Add bundle analyzer
-**Package:** `@next/bundle-analyzer`
-**Impact:** Identify bundle size issues
+### [P3-3] Add Error Boundaries
+**Action:**
+1. Create error boundary component
+2. Wrap main layout sections
+3. Add fallback UI
 
 ---
 
-### 17. Add performance monitoring
-**Tools:** Lighthouse CI, Web Vitals
-**Impact:** Track performance over time
+## 📋 Task Summary
+
+| Priority | Count | Estimated Time |
+|----------|-------|----------------|
+| P0 (Critical) | 2 | 15 min |
+| P1 (High) | 4 | 45 min |
+| P2 (Medium) | 4 | 60 min |
+| P3 (Low) | 3 | 90 min |
+| **Total** | **13** | **~3.5 hours** |
 
 ---
 
-### 18. Add accessibility audit
-**Tools:** axe-core, pa11y
-**Impact:** Ensure WCAG compliance
+**Current Sprint Focus:** P0 tasks only (critical fixes before build)
 
----
-
-### 19. Add visual regression testing
-**Tools:** Percy, Chromatic
-**Impact:** Catch UI regressions
-
----
-
-### 20. Update README
-**Current:** Generic Next.js README
-**Target:** Custom Amp Spot README with:
-  - Local setup instructions
-  - Environment variables guide
-  - Deployment guide
-  - Contributing guidelines
-**Impact:** Better developer experience
-
----
-
-## Summary
-
-| Priority | Tasks | Status |
-|----------|-------|--------|
-| P0 | 3 | 🔴 Blocker |
-| P1 | 3 | 🟠 High |
-| P2 | 3 | 🟡 Medium |
-| P3 | 4 | 🟢 Low |
-| P4 | 4 | 🔵 Future |
-
-**Immediate Focus:** P0 + P1 (6 tasks)
-**Estimated Time:** 2-3 hours for P0+P1
-
----
-
-## Execution Order
-
-1. Task 1 (Math.random errors) - Most critical, affects 5 pages
-2. Task 2 (updatePrices) - Runtime error
-3. Task 3 (Date.now) - Animation bug
-4. Task 4 (unescaped entities) - Code quality
-5. Task 5 (setState in effect) - Performance
-6. Task 6 (useEffect dependency) - Potential bug
-
-Then proceed to P2-P4 as time permits.
+**Next Phase:** PHASE 3: EDIT (Execute P0 tasks)

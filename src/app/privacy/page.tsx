@@ -18,7 +18,7 @@ export default function PrivacyPage() {
           <div className="rounded-2xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 p-8">
             <h2 className="text-2xl font-bold text-white mb-4">Introduction</h2>
             <p className="text-gray-300 leading-relaxed">
-              Amp Spot ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy 
+              Amp Spot (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This Privacy Policy 
               explains how we collect, use, disclose, and safeguard your information when you use our 
               website, plugins, and services.
             </p>

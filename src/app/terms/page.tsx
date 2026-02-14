@@ -88,7 +88,7 @@ export default function TermsPage() {
           <div className="rounded-2xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 p-8">
             <h2 className="text-2xl font-bold text-white mb-4">Disclaimer of Warranties</h2>
             <p className="text-gray-300 leading-relaxed">
-              Amp Spot plugins are provided "as is" without warranty of any kind, either express or 
+              Amp Spot plugins are provided &ldquo;as is&rdquo; without warranty of any kind, either express or 
               implied, including but not limited to warranties of merchantability, fitness for a 
               particular purpose, or non-infringement.
             </p>

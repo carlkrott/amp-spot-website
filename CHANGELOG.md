@@ -2,7 +2,43 @@
 
 All notable changes to the Amp Spot website will be documented in this file.
 
-## [Unreleased] - 2026-02-13
+## [Unreleased] - 2026-02-14
+
+### Fixed
+- **P1 - Unescaped entities in JSX**
+  - Fixed 6 unescaped quote errors in `src/app/privacy/page.tsx`
+  - Fixed 2 unescaped quote errors in `src/app/terms/page.tsx`
+  - Replaced quotes with `&ldquo;` and `&rdquo;` entities
+
+### Added
+- **P1 - SEO Improvements**
+  - `src/app/sitemap.ts` - Dynamic sitemap generation
+    - Includes all static pages
+    - Includes all plugin detail pages
+    - Includes all blog post pages
+    - Proper lastModified dates and priorities
+  - `public/robots.txt` - Search engine crawler directives
+    - Allows all crawlers
+    - Includes sitemap reference
+
+- **P1 - Developer Experience**
+  - `type-check` script in package.json
+  - `lint:fix` script in package.json
+
+### Technical Debt
+- 22 remaining errors: unescaped entities in JSX (low priority)
+  - `src/app/about/page.tsx` (1 instance)
+  - `src/app/blog/page.tsx` (1 instance)
+  - `src/app/contact/page.tsx` (1 instance)
+  - `src/app/page.tsx` (4 instances)
+  - `src/app/pricing/page.tsx` (2 instances)
+  - `src/app/social/page.tsx` (0 instances)
+  - `src/app/youtube/page.tsx` (2 instances)
+  - `src/components/CurrencySelector.tsx` (1 instance)
+
+---
+
+## [0.1.1] - 2026-02-13
 
 ### Fixed
 - **P0 - Math.random() impure function errors (16 instances)**

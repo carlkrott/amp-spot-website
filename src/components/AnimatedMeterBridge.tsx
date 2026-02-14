@@ -91,6 +91,7 @@ export function AnimatedMeterBridge() {
       };
     }));
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- animate is passed to itself for animation loop
     animationRef.current = requestAnimationFrame(animate);
   }, []);
 

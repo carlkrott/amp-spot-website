@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ampspot.audio/sitemap.xml
+
+# Crawl-delay (optional, respectful rate limiting)
+Crawl-delay: 1
+
+# Disallow specific paths if needed
+# Disallow: /api/
+# Disallow: /private/

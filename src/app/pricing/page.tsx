@@ -61,11 +61,13 @@ const faqs = [
 ];
 
 export default function PricingPage() {
-  const [currency, setCurrency] = useState('USD');
-  const [prices, setPrices] = useState({
-    premium: 14.99,
-    lifetime: 199,
-  });
+  // Initialize state with derived value to avoid setState in effect
+  const savedCurrency = loadCurrencyPreference();
+  const [currency, setCurrency] = useState(savedCurrency);
+  const [prices, setPrices] = useState(() => ({
+    premium: convertPrice(14.99, savedCurrency),
+    lifetime: convertPrice(199, savedCurrency),
+  }));
 
   const updatePrices = (currencyCode: string) => {
     setPrices({
@@ -75,10 +77,7 @@ export default function PricingPage() {
   };
 
   useEffect(() => {
-    // Load saved currency preference
-    const savedCurrency = loadCurrencyPreference();
-    setCurrency(savedCurrency);
-    updatePrices(savedCurrency);
+    // Listen for currency changes from header
 
     // Listen for currency changes from header
     const handleCurrencyChange = (event: Event) => {
@@ -107,7 +106,7 @@ export default function PricingPage() {
               Simple, Transparent Pricing
             </h1>
             <p className="mt-6 text-lg leading-8 text-orange-100 sm:text-xl">
-              Professional audio plugins at prices that make sense. Start with a free trial, upgrade when you're ready.
+              Professional audio plugins at prices that make sense. Start with a free trial, upgrade when you&apos;re ready.
             </p>
           </div>
         </div>

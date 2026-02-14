@@ -180,7 +180,7 @@ export default function YouTubePage() {
               Coming Soon
             </h2>
             <p className="mt-4 text-lg text-gray-400">
-              Here's what we're working on for the channel
+              Here&apos;s what we&apos;re working on for the channel
             </p>
           </div>
 
