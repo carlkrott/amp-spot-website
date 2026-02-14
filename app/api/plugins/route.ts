@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { validateRequest, PluginCreateSchema, PluginQuerySchema } from '@/lib/validations';
 
 export interface Plugin {
   id: number;
@@ -16,23 +17,31 @@ export interface Plugin {
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const category = searchParams.get('category');
-    const limit = parseInt(searchParams.get('limit') || '50');
-    const offset = parseInt(searchParams.get('offset') || '0');
+    const queryParams = {
+      category: searchParams.get('category'),
+      limit: searchParams.get('limit'),
+      offset: searchParams.get('offset'),
+    };
 
+    const validation = validateRequest(PluginQuerySchema, queryParams);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const { category, limit, offset } = validation.data;
     let queryText = 'SELECT * FROM plugins';
     const params: unknown[] = [];
-    
+
     if (category) {
       queryText += ' WHERE category = $1';
       params.push(category);
     }
-    
+
     queryText += ' ORDER BY created_at DESC LIMIT $' + (params.length + 1) + ' OFFSET $' + (params.length + 2);
     params.push(limit, offset);
 
     const result = await query<Plugin>(queryText, params);
-    
+
     return NextResponse.json({
       plugins: result.rows,
       total: result.rowCount,
@@ -52,18 +61,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, version, description, category } = body;
+    const validation = validateRequest(PluginCreateSchema, body);
 
-    if (!name || !version) {
-      return NextResponse.json(
-        { error: 'Name and version are required' },
-        { status: 400 }
-      );
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
     }
+
+    const { name, version, description, category } = validation.data;
 
     const result = await query<Plugin>(
       'INSERT INTO plugins (name, version, description, category) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, version, description || '', category || 'general']
+      [name, version, description, category]
     );
 
     return NextResponse.json(result.rows[0], { status: 201 });

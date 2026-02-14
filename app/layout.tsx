@@ -16,6 +16,43 @@ export const metadata: Metadata = {
   title: "Amp Spot - Premium Audio Plugins",
   description: "Professional audio plugins for music producers and sound engineers. High-quality VST effects and instruments.",
   keywords: "VST, audio plugins, music production, sound design, DAW",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://amp-spot.com",
+    title: "Amp Spot - Premium Audio Plugins",
+    description: "Professional audio plugins for music producers and sound engineers. High-quality VST effects and instruments.",
+    siteName: "Amp Spot",
+    images: [
+      {
+        url: "https://amp-spot.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Amp Spot - Premium Audio Plugins",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Amp Spot - Premium Audio Plugins",
+    description: "Professional audio plugins for music producers and sound engineers. High-quality VST effects and instruments.",
+    images: ["https://amp-spot.com/og-image.jpg"],
+    creator: "@ampspot",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
 };
 
 export default function RootLayout({

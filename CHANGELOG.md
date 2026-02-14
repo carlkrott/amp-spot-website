@@ -4,10 +4,29 @@ All notable changes to the Amp Spot website will be documented in this file.
 
 ## [Unreleased]
 
-### Added - 2026-02-14
+### Added - 2026-02-14 (Sprint 2)
+- Social sharing metadata
+  - OpenGraph tags in `app/layout.tsx`
+  - Twitter Card tags in `app/layout.tsx`
+  - robots meta configuration
+- Error handling
+  - `app/components/ErrorBoundary.tsx` - React error boundary component
+  - `app/components/ErrorBoundaryWrapper.tsx` - Client wrapper for error boundary
+  - `app/template.tsx` - Root template with error boundary
+- Input validation with zod
+  - `lib/validations.ts` - Centralized validation schemas
+  - Plugin API validation (GET/POST)
+  - Blog API validation
+  - Session API validation (GET/POST/DELETE)
+  - Helper function for validation responses
+
+### Added - 2026-02-14 (Sprint 1)
 - SEO optimization
   - `app/robots.ts` - robots.txt for search engine crawling
   - `app/sitemap.ts` - dynamic sitemap for better SEO
+
+### Dependencies - 2026-02-14
+- Added `zod` v4.3.6 for input validation
 
 ### Changed - 2026-02-14
 - Updated task list for cron session
@@ -17,6 +36,7 @@ All notable changes to the Amp Spot website will be documented in this file.
 - PostgreSQL connection timeout to 100.64.0.4:24271 (infrastructure issue)
 - blog_posts table cannot be verified/created due to DB connection
 - Download files need to be added to `public/downloads/` directory
+- Redis connection timeout to 100.64.0.4:6379 (infrastructure issue)
 
 ---
 
